@@ -12,3 +12,6 @@ You need to delete the empty files like v, b, e ... etc
 LICENSE is BrCraft131313 License 
 This will be explained in the license file. 
 
+## LegxUI
+[![](https://raw.githubusercontent.com/BrCraft131313/DixiOS/Home/LegxUIWhite.png)](https://github.com/BrCraft131313/LegxUI/)
+[![](https://raw.githubusercontent.com/BrCraft131313/DixiOS/Home/LegxUIBlack.png)](https://github.com/BrCraft131313/LegxUI/)
