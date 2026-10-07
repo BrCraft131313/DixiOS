@@ -1,1 +1,31 @@
+Copyright (C) BrCraft131313. All rights reserved under BrCraft131313 Public License v1.0.
+BrCraft131313 Public License (BPL)
+Version 1.0
+Author & Copyright Holder: BrCraft131313
+Section 1: Licensing Terms & Compatibility
+Multi-Licensing & Module Rights: Components and modules within this operating system remain subject to their respective individual open-source licenses.
+License Choice Flexibility: Users and developers are permitted to relicense or utilize any portion of this software under any license of their choice, provided that it does not conflict with or violate the terms of the specific underlying libraries or components used within that portion.
+Section 2: Corporate & Vendor Obligations
+Any commercial entity or vendor that distributes, modifies, or pre-installs this operating system on hardware must strictly comply with the following conditions:
+Bloatware & Pre-installed Software:
+Malicious, invasive, or telemetry-heavy bloatware is strictly prohibited.
+If beneficial pre-installed applications are provided, they must be fully removable and uninstallable by the end-user using standard system interfaces without requiring root or administrative privileges.
+Hardware Harmony & Optimization:
+When building or adapting this system for a specific device, the vendor must deliver 100% hardware-software optimization, stability, and seamless integration, matching the performance standards of unified closed systems (e.g., iOS, HarmonyOS NEXT).
+Section 3: Bootloader & Device Freedom Policy
+Mandatory Unlocked Bootloader Category:
+The bootloader must be unlocked and user-accessible by default for the following device classes:
+Smartphones
+Tablets
+Laptops powered by ARM processors
+Other Device Categories:
+For all other hardware categories not explicitly listed above, vendors retain the right to manage and define their own bootloader lock policies.
+Section 4: Enforcement & Legal Remedies
+In the event that a vendor fails to comply with any section of this license (including distributing non-removable bloatware, locking the bootloader on designated devices, or delivering non-optimized builds):
+Mandatory Cure Period & Remedies: The vendor must immediately execute one of the following corrective actions:
+A) Fully unlock the device bootloader for end-users.
+B) Publicly release the complete modified source code of the system.
+Legal Prosecution: Failure to comply with the remedies above shall constitute a direct copyright infringement of the software. The copyright holder reserves the right to initiate legal proceedings and seek judicial remedies under international copyright and intellectual property laws.
+
+Copyright (C) BrCraft131313. All rights reserved under BrCraft131313 Public License v1.0.
 
