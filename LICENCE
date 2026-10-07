@@ -1,4 +1,5 @@
 Copyright (C) BrCraft131313. All rights reserved under BrCraft131313 Public License v1.0.
+
 BrCraft131313 Public License (BPL)
 Version 1.0
 Author & Copyright Holder: BrCraft131313
@@ -26,6 +27,7 @@ Mandatory Cure Period & Remedies: The vendor must immediately execute one of the
 A) Fully unlock the device bootloader for end-users.
 B) Publicly release the complete modified source code of the system.
 Legal Prosecution: Failure to comply with the remedies above shall constitute a direct copyright infringement of the software. The copyright holder reserves the right to initiate legal proceedings and seek judicial remedies under international copyright and intellectual property laws.
+(Note: Follow the license rules for each partition; if the kernel partition contains Linux which is based on the GNU General Public License 2, then follow its rules... and so on).
 
 Copyright (C) BrCraft131313. All rights reserved under BrCraft131313 Public License v1.0.
 
