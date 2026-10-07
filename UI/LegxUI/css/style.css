@@ -1,0 +1,175 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    user-select: none;
+    font-family: system-ui, -apple-system, sans-serif;
+}
+
+body {
+    background-color: #3f3f3f;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+/* الجزء العلوي الداكن */
+#top-panel {
+    background-color: #3f3f3f;
+    color: #ffffff;
+    padding: 15px 25px 5px 25px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* شريط الحالة العلوي */
+.status-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.status-left {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.status-right {
+    display: flex;
+    gap: 10px;
+}
+
+.icon-btn {
+    background: transparent;
+    border: none;
+    font-size: 26px;
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 8px;
+    transition: background 0.2s;
+}
+
+.icon-btn.power {
+    background-color: #ff9500;
+    border-radius: 8px;
+    padding: 2px 8px;
+}
+
+.icon-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+/* شريط التنقل والتطبيقات */
+.app-carousel {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+}
+
+.arrow-btn {
+    background: transparent;
+    color: #e53935;
+    border: none;
+    font-size: 28px;
+    cursor: pointer;
+}
+
+.search-btn {
+    background: transparent;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.apps-container {
+    display: flex;
+    gap: 15px;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+    padding: 5px;
+}
+
+.app-disc {
+    font-size: 38px;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.app-disc:hover {
+    transform: scale(1.2);
+}
+
+/* الفاصل بين اللانشر والتطبيق */
+.separator-dots {
+    text-align: center;
+    color: #ffffff;
+    font-size: 20px;
+    letter-spacing: 4px;
+    line-height: 10px;
+}
+
+/* المنطقة البيضاء السفلى */
+#app-viewport {
+    flex: 1;
+    background-color: #ffffff;
+    width: 100%;
+}
+
+#app-frame {
+    width: 100%;
+    height: 100%;
+    border: none;
+  }
+
+.update-card {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(12px);
+  border-radius: 16px;
+  padding: 24px;
+  color: #fff;
+  max-width: 420px;
+  font-family: system-ui, sans-serif;
+  direction: rtl;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.status-text {
+  margin: 16px 0 10px;
+  font-size: 14px;
+  color: #d1d5db;
+}
+
+.progress-container {
+  width: 100%;
+  height: 10px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 5px;
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+
+.progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, #007aff, #00c6ff);
+  transition: width 0.4s ease;
+}
+
+button {
+  background: #007aff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+button:hover {
+  background: #0056b3;
+}
