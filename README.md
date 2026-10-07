@@ -14,10 +14,15 @@ If You are building a system on top of this system, You need to delete the empty
 You Can Contributing By Fixing Errors And security vulnerabilities
 ## Build Guide
 But Your Kernel in /Kernel 
+
 But Your Drivers in /Drivers
+
 But Your Apps in /Apps
+
 But Your Kernel File (kernel.bin) in /boot
+
 But Your Init(ex:BusyBox) in /UserSpace/bin
+
 Tomorrow I Will Make Video To How To Build Your DixiOS Distro
 ## License 
 LICENSE is BrCraft131313 License 
