@@ -4,10 +4,13 @@
 
 ## About DixiOS:
 DixiOS Is A Modular System
+
 programmed using HTML CSS JS BASH JAVA 
+
 The Main Kernel is Linux But You Can Put Any Kernel 
-If You are building a system on top of this system.
-You need to delete the empty files like v, b, e ... etc
+
+If You are building a system on top of this system, You need to delete the empty files like v, b, e ... etc
+
 You Can Contributing By Fixing Errors And security vulnerabilities
 ## License 
 LICENSE is BrCraft131313 License 
