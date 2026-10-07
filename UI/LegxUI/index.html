@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LegxUI</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <!-- الجزء العلوي: اللانشر والـ Dock -->
+    <header id="top-panel">
+        
+        <!-- شريط الحالة (الوقت + الطقس + الإعدادات + الطفي) -->
+        <div class="status-bar">
+            <div class="status-left">
+                <span id="time-widget">20:41 PM</span>
+            </div>
+            <div class="status-right">
+                <button class="icon-btn" title="إعدادات الجهاز" onclick="systemCommand('settings')">🖥️</button>
+                <button class="icon-btn power" title="إيقاف التشغيل" onclick="systemCommand('shutdown')">📴</button>
+            </div>
+        </div>
+
+        <!-- قائمة التطبيقات والأزرار التفاعلية -->
+        <div class="app-carousel">
+            <button class="arrow-btn" onclick="scrollApps('left')"><</button>
+            
+            <button class="search-btn" title="عرض كل التطبيقات" onclick="systemCommand('all-apps')">🔍</button>
+
+            <!-- قائمة أسطوانات التطبيقات -->
+            <div class="apps-container" id="apps-list">
+                <div class="app-disc" title="تطبيق 1" onclick="openApp('app1')">💿</div>
+                <div class="app-disc" title="تطبيق 2" onclick="openApp('app2')">💿</div>
+                <div class="app-disc" title="تطبيق 3" onclick="openApp('app3')">💿</div>
+                <div class="app-disc" title="تطبيق 4" onclick="openApp('app4')">💿</div>
+            </div>
+
+            <button class="arrow-btn" onclick="scrollApps('right')">></button>
+        </div>
+
+        <!-- الفاصل -->
+        <div class="separator-dots">
+            <span>•</span><span>•</span><span>•</span>
+        </div>
+
+    </header>
+
+    <!-- الجزء السفلي: المساحة البيضاء لمنطقة التطبيق المفتوح -->
+    <main id="app-viewport">
+        <iframe id="app-frame" src="about:blank" frameborder="0"></iframe>
+    </main>
+
+    <script src="js/system-bridge.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
+
+<div class="update-card">
+  <h2>تحديث النظام (DixiOS OTA)</h2>
+  
+  <div id="update-status" class="status-text">جاهز للفحص عن تحديثات جديدة...</div>
+  
+  <div class="progress-container">
+    <div id="progress-bar" class="progress-bar" style="width: 0%;"></div>
+  </div>
+  
+  <div class="actions">
+    <button id="btn-check" onclick="checkUpdate()">الفحص عن تحديث</button>
+    <button id="btn-start" onclick="startUpdate()" style="display: none;">تثبيت الآن</button>
+  </div>
+</div>
+
+<script>
+  // الاستماع لرسائل الجسر عبر WebSocket أو API
+  function updateProgress(percent, message) {
+    document.getElementById('progress-bar').style.width = percent + '%';
+    document.getElementById('update-status').innerText = message;
+  }
+
+  function checkUpdate() {
+    document.getElementById('update-status').innerText = "جاري الفحص...";
+    // إرسال أمر للجسر للتحقق من وجود تحديث
+    if (window.DixiBridge) {
+      window.DixiBridge.send(JSON.stringify({ action: "CHECK_UPDATE" }));
+    }
+  }
+
+  function startUpdate() {
+    document.getElementById('btn-start').style.display = 'none';
+    document.getElementById('btn-check').style.display = 'none';
+    
+    // إرسال أمر بدء التحديث للجسر لتشغيل live-update.sh
+    if (window.DixiBridge) {
+      window.DixiBridge.send(JSON.stringify({ action: "START_UPDATE" }));
+    }
+  }
+</script>
