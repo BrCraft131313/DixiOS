@@ -16,6 +16,8 @@ You Can Contributing By Fixing Errors And security vulnerabilities
 LICENSE is BrCraft131313 License 
 This will be explained in the license file. 
 
+## Suggestions 
+[Suggestions](https://github.com/BrCraft131313/DixiOS/discussions/2)
 ## LegxUI
 [![](https://raw.githubusercontent.com/BrCraft131313/DixiOS/Home/LegxUIWhite.png)](https://github.com/BrCraft131313/LegxUI/)
 [![](https://raw.githubusercontent.com/BrCraft131313/DixiOS/Home/LegxUIBlack.png)](https://github.com/BrCraft131313/LegxUI/)
