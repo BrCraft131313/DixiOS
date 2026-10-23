@@ -52,7 +52,11 @@ The Answer is: Why build something in a language I haven't learned, when the two
 ## End of general introduction to the DixiOS 
 
 DixiOS, From an idea in my head and a challenge, to a reality I see with my own eyes
+
 You don't need a goal to build something you enjoy as a hobby.
+
 You can set reasons or goals, but your project cannot be useless simply because you didn't set goals for it.
+
 Greetings to everyone who has used DixiOS or read the documentation.
+
 BrCraft131313, October 23
