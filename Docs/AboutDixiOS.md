@@ -15,4 +15,6 @@ DixiOS is A Modular OS Based on
 - PowerShell For Build DixiOS In Windows & MARKDOWN For Write Docs
 
 ## History 
-- 
+- April 3: Create The Repository In the name of the BOSP
+- June: Change The Name To DixiOS
+- October 7: Build First Version (v0.1)
