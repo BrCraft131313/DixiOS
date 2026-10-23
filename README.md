@@ -13,15 +13,15 @@ If You are building a system on top of this system, You need to delete the empty
 
 You Can Contributing By Fixing Errors And security vulnerabilities
 ## Build Guide
-But Your Kernel in /Kernel 
+Put Your Kernel in /Kernel 
 
-But Your Drivers in /Drivers
+Put Your Drivers in /Drivers
 
-But Your Apps in /Apps
+Put Your Apps in /Apps
 
-But Your Kernel File (kernel.bin) in /boot
+Put Your Kernel File (kernel.bin) in /boot
 
-But Your Init(ex:BusyBox) in /UserSpace/bin
+Put Your Init(ex:BusyBox) in /UserSpace/bin
 ## License 
 LICENSE is BrCraft131313 License 
 This will be explained in the license file. 
