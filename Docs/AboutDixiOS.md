@@ -70,9 +70,14 @@ The Answer is: Why build something in a language I haven't learned, when the two
 
 ### The formats supported by the two files ( build.sh && build.ps1 )
 
+#### All Scripts Support This Formats
+
 - IMG
 - ISO
 - TARXZ
+
+  #### Only build.sh & build.ps1 Support This Formats 
+
 - JAR ( BRIDGE )
 - ALL
 
