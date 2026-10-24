@@ -53,6 +53,16 @@ int str_compare(const char *s1, const char *s2) {
     return s1[i] - s2[i];
 }
 
+// فحص البادئة للتعرف على أمر print
+int str_starts_with(const char *str, const char *prefix) {
+    int i = 0;
+    while (prefix[i] != '\0') {
+        if (str[i] != prefix[i]) return 0;
+        i++;
+    }
+    return 1;
+}
+
 void main();
 
 void _start() {
@@ -68,6 +78,13 @@ void main() {
     print_string(banner, str_len(banner));
 
     char buf[64];
+
+    // مصفوفة لتخزين آخر 5 أوامر
+    char history[5][64];
+    for (int i = 0; i < 5; i++) {
+        history[i][0] = '\0';
+    }
+    int history_count = 0;
 
     // حلقة تفاعلية (Shell Loop)
     while (1) {
@@ -87,23 +104,72 @@ void main() {
             }
         }
 
+        if (buf[0] == '\0') {
+            continue;
+        }
+
+        // إضافة الأمر المدخل إلى الـ History
+        if (history_count < 5) {
+            int j = 0;
+            while (buf[j] != '\0' && j < 63) {
+                history[history_count][j] = buf[j];
+                j++;
+            }
+            history[history_count][j] = '\0';
+            history_count++;
+        } else {
+            for (int i = 0; i < 4; i++) {
+                int j = 0;
+                while (history[i + 1][j] != '\0' && j < 63) {
+                    history[i][j] = history[i + 1][j];
+                    j++;
+                }
+                history[i][j] = '\0';
+            }
+            int j = 0;
+            while (buf[j] != '\0' && j < 63) {
+                history[4][j] = buf[j];
+                j++;
+            }
+            history[4][j] = '\0';
+        }
+
         if (str_compare(buf, "help") == 0) {
             const char *help_msg = "Commands:\n"
                                    "  help    - Display this help list\n"
-                                   "  version - Show OS version info\n"
+                                   "  info    - Show OS info\n"
+                                   "  print   - Print text to screen\n"
+                                   "  history - Show last 5 commands\n"
                                    "  clear   - Clear terminal screen\n\n";
             print_string(help_msg, str_len(help_msg));
         } 
-        else if (str_compare(buf, "version") == 0) {
-            const char *ver_msg = "DixiOS v0.2.1 (x86_32)\n\n";
-            print_string(ver_msg, str_len(ver_msg));
+        else if (str_compare(buf, "info") == 0) {
+            const char *info_msg = "OS : DixiOS\n"
+                                  "Version : v0.2.2\n"
+                                  "Architecture : x86_32\n"
+                                  "Author : BrCraft131313\n"
+                                  "GitHub : https://github.com/BrCraft131313/DixiOS/\n"
+                                  "Release in : October 24\n\n";
+            print_string(info_msg, str_len(info_msg));
+        }
+        else if (str_starts_with(buf, "print ")) {
+            const char *text_to_print = buf + 6;
+            print_string(text_to_print, str_len(text_to_print));
+            print_string("\n", 1);
+        }
+        else if (str_compare(buf, "print") == 0) {
+            print_string("\n", 1);
+        }
+        else if (str_compare(buf, "history") == 0) {
+            for (int i = 0; i < history_count; i++) {
+                print_string(history[i], str_len(history[i]));
+                print_string("\n", 1);
+            }
+            print_string("\n", 1);
         }
         else if (str_compare(buf, "clear") == 0) {
             const char *clear_msg = "\033[H\033[J";
             print_string(clear_msg, str_len(clear_msg));
-        }
-        else if (str_compare(buf, "") == 0) {
-            // الضغط على Enter بدون أمر
         }
         else {
             const char *err_msg = "Unknown command. Type 'help' for options.\n\n";
