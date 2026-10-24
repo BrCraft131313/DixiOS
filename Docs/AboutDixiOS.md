@@ -5,7 +5,7 @@
 
 ## Description 
 
-DixiOS is A Modular OS Based on 
+DixiOS is A Modular & x86_32 OS Based on 
 - HTML
 - CSS
 - JS
@@ -13,6 +13,7 @@ DixiOS is A Modular OS Based on
 - BASH
 - C
 - PowerShell For Build DixiOS In Windows && MARKDOWN For Write Docs
+And Runs In Limbo X86 Emulator ( core2duo )
 
 ## History 
 
