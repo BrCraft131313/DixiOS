@@ -36,17 +36,25 @@ clear
 ## Ram Requirements
 
 Unlike systems that require gigabytes, The system requires at least 48 megabytes.
+
 Because of the system's lightness and its reliance on CLI
+
 Because of the small ISO size (11.64MB)
+
 It only needs 48 MB 
 
 ## Build Scripts
 
 There are two files that start with the same name, but in different programming languages.
+
 Some of you may be wondering: Why?
+
 Firstly, If the HostOS is from the UNIX family, Use build.sh ( BASH )
+
 If The HostOS is Windows And The Your Windows Support PowerShell, Use build.ps1 ( PowerShell )
+
 And some of you are also wondering: why you don't use Makefile ( Cmake )
+
 The Answer is: Why build something in a language I haven't learned, when the two previous languages are sufficient?
 
 ### The formats supported by the two files ( build.sh && build.ps1 )
