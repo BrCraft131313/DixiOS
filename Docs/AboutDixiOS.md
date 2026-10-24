@@ -31,7 +31,18 @@ clear
   - Replace version to info And made it more professional
   - Add print Command to Print Anything
   - Add history Command To Show Terminal History
-  
+  - Build First Lite Version From Second Sub-Version From Second Version (v0.2.2-Lite)
+
+  #### Features
+
+ - Remove /UI & /UserSpace & /Apps & /Drivers & /ext & /VirtSpace
+ - Make the system work only with /bin & /boot And /out In Source Code Folder For Build outputs (ex: iso, img, tar.xz)
+ - Create Two Build-Lite Scripts ( build-lite.sh & build-lite.ps1 )
+##### The formats supported by the two files ( build.sh && build.ps1 )
+
+- ISO
+- IMG
+- TARXZ
 
 ## Ram Requirements
 
