@@ -38,7 +38,7 @@ clear
  - Remove /UI & /UserSpace & /Apps & /Drivers & /ext & /VirtSpace
  - Make the system work only with /bin & /boot And /out In Source Code Folder For Build outputs (ex: iso, img, tar.xz)
  - Create Two Build-Lite Scripts ( build-lite.sh & build-lite.ps1 )
-##### The formats supported by the two files ( build.sh && build.ps1 )
+##### The formats supported by the two files ( build-lite.sh && build-lite.ps1 )
 
 - ISO
 - IMG
