@@ -23,7 +23,15 @@ DixiOS is A Modular OS Based on
 - October 22: Build First Sub-update For Second Version (v0.2.1) And Remove Init-Loop And He made it print only the success sentence at the system's start And Add Three Commands These are:
 help
 version
-clear 
+clear
+- October 24: Build Second Sub-Version From Second Version (v0.2.2)
+
+  ### Features
+
+  - Replace version to info And made it more professional
+  - Add print Command to Print Anything
+  - Add history Command To Show Terminal History
+  
 
 ## Ram Requirements:
 
