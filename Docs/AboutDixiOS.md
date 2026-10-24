@@ -60,9 +60,9 @@ There are two files that start with the same name, but in different programming 
 
 Some of you may be wondering: Why?
 
-Firstly, If the HostOS is from the UNIX family, Use build.sh ( BASH )
+Firstly, If the HostOS is from the UNIX family, Use build.sh/build-lite.sh ( BASH )
 
-If The HostOS is Windows And The Your Windows Support PowerShell, Use build.ps1 ( PowerShell )
+If The HostOS is Windows And The Your Windows Support PowerShell, Use build.ps1/build-lite.ps1 ( PowerShell )
 
 And some of you are also wondering: why you don't use Makefile ( Cmake )
 
