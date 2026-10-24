@@ -1,4 +1,10 @@
-# DixiOS
+# Attention!
+
+In October 25, I Will Delete README.md
+To Show About DixiOS And Other Docs
+Go To /Docs In This Repository 
+
+## DixiOS
 ## Logo
 [![](https://raw.githubusercontent.com/BrCraft131313/DixiOS/Home/DixiOS.png)](https://github.com/BrCraft131313/DixiOS/)
 
