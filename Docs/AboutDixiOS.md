@@ -37,7 +37,7 @@ clear
 
  - Remove /UI & /UserSpace & /Apps & /Drivers & /ext & /VirtSpace
  - Make the system work only with /bin & /boot And /out In Source Code Folder For Build outputs (ex: iso, img, tar.xz)
- - Create Two Build-Lite Scripts ( build-lite.sh & build-lite.ps1 )
+ - Create Two Build-Lite Scripts ( build-lite.sh && build-lite.ps1 )
 ##### The formats supported by the two files ( build-lite.sh && build-lite.ps1 )
 
 - ISO
@@ -68,7 +68,7 @@ And some of you are also wondering: why you don't use Makefile ( Cmake )
 
 The Answer is: Why build something in a language I haven't learned, when the two previous languages are sufficient?
 
-### The formats supported by the two files ( build.sh && build.ps1 )
+### The formats supported by the four files ( build.sh && build.ps1 && build-lite.sh && build-lite.ps1 )
 
 #### All Scripts Support This Formats
 
