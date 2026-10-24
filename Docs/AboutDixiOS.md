@@ -33,7 +33,7 @@ clear
   - Add history Command To Show Terminal History
   
 
-## Ram Requirements:
+## Ram Requirements
 
 Unlike systems that require gigabytes, The system requires at least 48 megabytes.
 Because of the system's lightness and its reliance on CLI
