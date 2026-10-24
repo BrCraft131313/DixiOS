@@ -12,7 +12,7 @@ DixiOS is A Modular OS Based on
 - JAVA
 - BASH
 - C
-- PowerShell For Build DixiOS In Windows & MARKDOWN For Write Docs
+- PowerShell For Build DixiOS In Windows && MARKDOWN For Write Docs
 
 ## History 
 
@@ -35,8 +35,8 @@ clear
 
   #### Features
 
- - Remove /UI & /UserSpace & /Apps & /Drivers & /ext & /VirtSpace
- - Make the system work only with /bin & /boot And /out In Source Code Folder For Build outputs (ex: iso, img, tar.xz)
+ - Remove /UI && /UserSpace && /Apps && /Drivers && /ext && /VirtSpace
+ - Make the system work only with /bin && /boot And /out In Source Code Folder For Build outputs (ex: iso, img, tar.xz)
  - Create Two Build-Lite Scripts ( build-lite.sh && build-lite.ps1 )
 ##### The formats supported by the two files ( build-lite.sh && build-lite.ps1 )
 
@@ -50,7 +50,7 @@ Unlike systems that require gigabytes, The system requires at least 48 megabytes
 
 Because of the system's lightness and its reliance on CLI
 
-Because of the small ISO size (11.64MB)
+Because of the small ISO size ( 11.64MB in v0.2.2 && 11.55MB in v0.2.2-Lite )
 
 It only needs 48 MB 
 
@@ -76,7 +76,7 @@ The Answer is: Why build something in a language I haven't learned, when the two
 - ISO
 - TARXZ
 
-  #### Only build.sh & build.ps1 Support This Formats 
+  #### Only build.sh && build.ps1 Support This Formats 
 
 - JAR ( BRIDGE )
 - ALL
