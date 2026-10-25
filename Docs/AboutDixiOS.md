@@ -23,9 +23,9 @@ And Runs In Limbo X86 Emulator ( core2duo )
 - October 7: Build First Version (v0.1)
 - October 20: Build Second Version (v0.2) And Add Basic Init Based In C Programming Language
 - October 22: Build First Sub-update For Second Version (v0.2.1) And Remove Init-Loop And He made it print only the success sentence at the system's start And Add Three Commands These are:
-- help
-- version
-- clear
+ - help
+ - version
+ - clear
 - October 24: Build Second Sub-Version From Second Version (v0.2.2)
   Features:
 
