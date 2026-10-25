@@ -27,13 +27,15 @@ And Runs In Limbo X86 Emulator ( core2duo )
      - version
      - clear
 - October 24: Build Second Sub-Version From Second Version (v0.2.2)
+
   Features:
 
   - Replace version to info And made it more professional
   - Add print Command to Print Anything
   - Add history Command To Show Terminal History
   - Build First Lite Version From Second Sub-Version From Second Version (v0.2.2-Lite)
-     Features:
+
+    Features:
 
      - Remove /UI && /UserSpace && /Apps && /Drivers && /ext && /VirtSpace
      - Make the system work only with /bin && /boot And /out In Source Code Folder For Build outputs (ex: iso, img, tar.xz)
@@ -41,6 +43,7 @@ And Runs In Limbo X86 Emulator ( core2duo )
     
   
 - October 25: Build Third Sub-Version From Second Version (v0.2.3)
+
   Features :
 
   - Add/Create A New Language Called DixiOS Script (DXS/.dxs)
