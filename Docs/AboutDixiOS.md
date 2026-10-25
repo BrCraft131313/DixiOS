@@ -27,6 +27,19 @@ help
 version
 clear
 - October 24: Build Second Sub-Version From Second Version (v0.2.2)
+- October 25: Build Third Sub-Version From Second Version (v0.2.3)
+  Features :
+
+  - Add/Create A New Language Called DixiOS Script (DXS/.dxs)
+
+  - Add This Commands:
+
+    - remove
+    - create
+    - edit
+    - list
+    - goto
+    - run
 
   ### Features
 
@@ -40,6 +53,7 @@ clear
  - Remove /UI && /UserSpace && /Apps && /Drivers && /ext && /VirtSpace
  - Make the system work only with /bin && /boot And /out In Source Code Folder For Build outputs (ex: iso, img, tar.xz)
  - Create Two Build-Lite Scripts ( build-lite.sh && build-lite.ps1 )
+
 ##### The formats supported by the two files ( build-lite.sh && build-lite.ps1 )
 
 - ISO
