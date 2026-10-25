@@ -35,9 +35,9 @@ And Runs In Limbo X86 Emulator ( core2duo )
   - Build First Lite Version From Second Sub-Version From Second Version (v0.2.2-Lite)
      Features:
 
- - Remove /UI && /UserSpace && /Apps && /Drivers && /ext && /VirtSpace
- - Make the system work only with /bin && /boot And /out In Source Code Folder For Build outputs (ex: iso, img, tar.xz)
- - Create Two Build-Lite Scripts ( build-lite.sh && build-lite.ps1 )
+     - Remove /UI && /UserSpace && /Apps && /Drivers && /ext && /VirtSpace
+     - Make the system work only with /bin && /boot And /out In Source Code Folder For Build outputs (ex: iso, img, tar.xz)
+     - Create Two Build-Lite Scripts ( build-lite.sh && build-lite.ps1 )
     
   
 - October 25: Build Third Sub-Version From Second Version (v0.2.3)
