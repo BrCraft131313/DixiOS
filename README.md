@@ -56,17 +56,12 @@ And Runs In Limbo X86 Emulator ( core2duo )
     - list
     - goto
     - run
+- October 26: Build Fourth Sub-Version From Second Version (0.2.4)
+       Features:
 
-## Ram Requirements
-
-Unlike systems that require gigabytes, The system requires at least 48 megabytes.
-
-Because of the system's lightness and its reliance on CLI
-
-Because of the small ISO size ( 11.64MB in v0.2.2 && 11.55MB in v0.2.2-Lite )
-
-It only needs 48 MB 
-
+           - Restore history Command
+           - Add Multi-Commands Support in DXS
+  
 ## Build Scripts
 
 There are two files that start with the same name, but in different programming languages.
