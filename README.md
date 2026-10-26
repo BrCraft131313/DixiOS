@@ -57,10 +57,10 @@ And Runs In Limbo X86 Emulator ( core2duo )
     - goto
     - run
 - October 26: Build Fourth Sub-Version From Second Version (0.2.4)
-       Features:
 
-           - Restore history Command
-           - Add Multi-Commands Support in DXS
+Features:
+- Restore history Command
+- Add Multi-Commands Support in DXS
   
 ## Build Scripts
 
