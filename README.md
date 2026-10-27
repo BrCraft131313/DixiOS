@@ -36,8 +36,7 @@ And Runs In Limbo X86 Emulator ( core2duo )
    Add history Command To Show Terminal History 
   Build First Lite Version From Second Sub-Version From Second Version (v0.2.2-Lite) 
 
-
-     Features:
+  Features:
 
    - Remove /UI && /UserSpace && /Apps && /Drivers && /ext && /VirtSpace
    - Make the system work only with /bin && /boot And /out In Source Code Folder For Build outputs (ex: iso, img, tar.xz)
