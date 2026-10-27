@@ -36,12 +36,14 @@ And Runs In Limbo X86 Emulator ( core2duo )
   <p> Add history Command To Show Terminal History </p>
   <p> Build First Lite Version From Second Sub-Version From Second Version (v0.2.2-Lite) </p>
 
-</details>
-    Features:
+
+    <p> Features:
 
      - Remove /UI && /UserSpace && /Apps && /Drivers && /ext && /VirtSpace
      - Make the system work only with /bin && /boot And /out In Source Code Folder For Build outputs (ex: iso, img, tar.xz)
-     - Create Two Build-Lite Scripts ( build-lite.sh && build-lite.ps1 )
+     - Create Two Build-Lite Scripts ( build-lite.sh && build-lite.ps1 ) </p>
+
+     </details>
     
   
 - October 25: Build Third Sub-Version From Second Version (v0.2.3)
