@@ -27,25 +27,21 @@ And Runs In Limbo X86 Emulator ( core2duo )
      - version
      - clear
   
-  <details> October 24: Build Second Sub-Version From Second Version (v0.2.2) 
+  - October 24: Build Second Sub-Version From Second Version (v0.2.2) 
 
-  <summary> Features </summary>
+   Features:
 
-  <p> Replace version to info And made it more professional </p>
-  <p> Add print Command to Print Anything </p>
-  <p> Add history Command To Show Terminal History </p>
-  <p> Build First Lite Version From Second Sub-Version From Second Version (v0.2.2-Lite) </p>
+   Replace version to info And made it more professional 
+   Add print Command to Print Anything 
+   Add history Command To Show Terminal History 
+  < Build First Lite Version From Second Sub-Version From Second Version (v0.2.2-Lite) 
 
 
-    <p> Features:
+     Features:
 
      - Remove /UI && /UserSpace && /Apps && /Drivers && /ext && /VirtSpace
      - Make the system work only with /bin && /boot And /out In Source Code Folder For Build outputs (ex: iso, img, tar.xz)
-     - Create Two Build-Lite Scripts ( build-lite.sh && build-lite.ps1 ) </p>
-
-     </details>
-    
-  
+     - Create Two Build-Lite Scripts ( build-lite.sh && build-lite.ps1 ) 
 - October 25: Build Third Sub-Version From Second Version (v0.2.3)
 
   Features :
@@ -66,14 +62,12 @@ Features:
 
  - Restore history Command
  - Add Multi-Commands Support in DXS
-
 - October 27: Build Fifth Sub-Version From Second Version (0.2.5)
 
 Features:
 
   - Add , ( && )
-
-  
+ 
 ## Build Scripts
 
 There are two files that start with the same name, but in different programming languages.
