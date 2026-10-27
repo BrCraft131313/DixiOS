@@ -61,6 +61,13 @@ And Runs In Limbo X86 Emulator ( core2duo )
 Features:
 - Restore history Command
 - Add Multi-Commands Support in DXS
+
+- October 27: Build Fifth Sub-Version From Second Version (0.2.5)
+
+      Features:
+
+          - Add , ( && )
+  
   
 ## Build Scripts
 
