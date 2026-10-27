@@ -51,9 +51,8 @@ October 25: Build Third Sub-Version From Second Version (v0.2.3)
 
   Features :
 
-  - Add/Create A New Language Called DixiOS Script (DXS/.dxs)
-
-   - Add This Commands:
+- Add/Create A New Language Called DixiOS Script (DXS/.dxs)
+ - Add This Commands:
 
     - remove
     - create
