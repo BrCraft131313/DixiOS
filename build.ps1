@@ -26,7 +26,7 @@ function Prepare-Sources {
     }
     New-Item -ItemType Directory -Path $TEMP_BUILD_DIR | Out-Null
 
-    $DEFAULT_DIRS = @("Apps", "UI", "UserSpace", "Kernel", "VirtSpace", "Drivers", "ext")
+    $DEFAULT_DIRS = @("Apps", "UI", "UserSpace", "boot", "VirtSpace", "Drivers", "ext")
 
     foreach ($dir in $DEFAULT_DIRS) {
         if (Test-Path "./$dir") {
