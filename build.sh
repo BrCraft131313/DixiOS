@@ -11,7 +11,7 @@ prepare_sources() {
     rm -rf "$TEMP_BUILD_DIR"
     mkdir -p "$TEMP_BUILD_DIR"
 
-    DEFAULT_DIRS=("Apps" "UI" "UserSpace" "Kernel" "VirtSpace" "Drivers" "ext")
+    DEFAULT_DIRS=("Apps" "UI" "UserSpace" "boot" "VirtSpace" "Drivers" "ext")
 
     for dir in "${DEFAULT_DIRS[@]}"; do
         if [ -d "./$dir" ]; then
