@@ -1,4 +1,4 @@
-// init.c - DixiOS i386 User-Space Init Process (v0.2.4)
+// init.c - DixiOS i386 User-Space Init Process (v0.2.5)
 
 #define MAX_FILES 16
 #define MAX_FILENAME 32
@@ -136,6 +136,7 @@ int find_file(const char *name) {
 }
 
 void execute_command(const char *cmd_line);
+void process_chained_commands(const char *line);
 
 // تنظيف الحواف والمسافات الزائدة في النصوص
 void trim_string(char *str) {
@@ -158,6 +159,37 @@ void trim_string(char *str) {
     }
 }
 
+// دالة تفكيك السلسلة وتفريغ الأوامر المربوطة بالفاصلة (,)
+void process_chained_commands(const char *line) {
+    char token[128];
+    int token_idx = 0;
+    int i = 0;
+
+    while (line[i] != '\0') {
+        if (line[i] == ',') {
+            token[token_idx] = '\0';
+            trim_string(token);
+            if (token[0] != '\0') {
+                execute_command(token);
+            }
+            token_idx = 0;
+        } else {
+            if (token_idx < 127) {
+                token[token_idx++] = line[i];
+            }
+        }
+        i++;
+    }
+
+    if (token_idx > 0) {
+        token[token_idx] = '\0';
+        trim_string(token);
+        if (token[0] != '\0') {
+            execute_command(token);
+        }
+    }
+}
+
 // مفسر السكربتات (.dxs) يدعم أوامر متعددة مفصولة بـ (,)
 void run_dxs_script(const char *content) {
     int i = 0;
@@ -173,35 +205,7 @@ void run_dxs_script(const char *content) {
             inner[idx] = '\0';
             if (content[i] == ']') i++;
 
-            // تفكيك السكربت بالفاصلة (,)
-            int k = 0;
-            int item_idx = 0;
-            char token[64];
-            int is_first_name = 1;
-
-            while (inner[k] != '\0') {
-                if (inner[k] == ',') {
-                    token[item_idx] = '\0';
-                    trim_string(token);
-                    if (!is_first_name && token[0] != '\0') {
-                        execute_command(token);
-                    }
-                    is_first_name = 0;
-                    item_idx = 0;
-                } else {
-                    if (item_idx < 63) {
-                        token[item_idx++] = inner[k];
-                    }
-                }
-                k++;
-            }
-            if (item_idx > 0) {
-                token[item_idx] = '\0';
-                trim_string(token);
-                if (!is_first_name && token[0] != '\0') {
-                    execute_command(token);
-                }
-            }
+            process_chained_commands(inner);
         } else {
             i++;
         }
@@ -213,7 +217,7 @@ void execute_command(const char *buf) {
     if (buf[0] == '\0') return;
 
     if (str_compare(buf, "help") == 0) {
-        const char *help_msg = "DixiOS Commands:\n"
+        const char *help_msg = "DixiOS Commands (v0.2.5):\n"
                                "  help                  - Display this help list\n"
                                "  info                  - Show OS info\n"
                                "  print <text>          - Print text\n"
@@ -224,14 +228,16 @@ void execute_command(const char *buf) {
                                "  goto <folderName/>    - Change directory\n"
                                "  remove <name[/]>      - Remove file or folder\n"
                                "  history               - Show last 5 commands\n"
-                               "  clear                 - Clear screen\n\n";
+                               "  clear                 - Clear screen\n"
+                               "  Note: You can chain commands using ',' (e.g. help, print x)\n\n";
         print_string(help_msg, str_len(help_msg));
     } 
     else if (str_compare(buf, "info") == 0) {
         const char *info_msg = "OS : DixiOS\n"
-                              "Version : v0.2.4\n"
+                              "Version : v0.2.5\n"
                               "Architecture : x86_32\n"
                               "Script Engine : DXS Multi-Command Supported (.dxs)\n"
+                              "Chaining Support : Enabled (,) separator\n"
                               "Author : BrCraft131313\n\n";
         print_string(info_msg, str_len(info_msg));
     }
@@ -399,7 +405,7 @@ void _start() {
     }
 
     const char banner[] = "\n====================================\n"
-                          " DixiOS i386 Init Started (v0.2.4)\n"
+                          " DixiOS i386 Init Started (v0.2.5)\n"
                           "====================================\n\n"
                           "Type 'help' to see available commands.\n\n";
     print_string(banner, str_len(banner));
@@ -425,8 +431,7 @@ void _start() {
 
         if (buf[0] != '\0') {
             add_to_history(buf);
-            execute_command(buf);
+            process_chained_commands(buf);
         }
     }
 }
-
