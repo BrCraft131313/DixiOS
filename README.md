@@ -73,7 +73,7 @@ Features:
 Features:
 
   - Add , ( && )
-  - Update Syntax ex( [name: help, help] ❎ [help] ✅ )
+  - Update DXS Syntax ex( [name: help, help] ❎ [help] ✅ )
  
 ## Build Scripts
 
