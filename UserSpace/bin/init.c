@@ -1,4 +1,4 @@
-// init.c - DixiOS i386 User-Space Init Process (v0.2.5)
+// init.c - DixiOS i386 User-Space Init Process (v0.2.6)
 
 #define MAX_FILES 16
 #define MAX_FILENAME 32
@@ -79,8 +79,8 @@ void print_string(const char *str, unsigned int len) {
     __asm__ __volatile__ (
         "int $0x80"
         :
-        : "a"(4),      // sys_write
-          "b"(1),      // stdout
+        : "a"(4),
+          "b"(1),
           "c"(str),
           "d"(len)
     );
@@ -92,8 +92,8 @@ int read_string(char *buf, unsigned int max_len) {
     __asm__ __volatile__ (
         "int $0x80"
         : "=a"(bytes_read)
-        : "a"(3),      // sys_read
-          "b"(0),      // stdin
+        : "a"(3),
+          "b"(0),
           "c"(buf),
           "d"(max_len)
     );
@@ -112,7 +112,7 @@ int str_compare(const char *s1, const char *s2) {
         if (s1[i] != s2[i]) return s1[i] - s2[i];
         i++;
     }
-    if ((s1[i] == '\n' || s1[i] == '\r' || s1[i] == '\0') && 
+    if ((s1[i] == '\n' || s1[i] == '\r' || s1[i] == '\0') &&
         (s2[i] == '\n' || s2[i] == '\r' || s2[i] == '\0')) return 0;
     return s1[i] - s2[i];
 }
@@ -141,9 +141,11 @@ void process_chained_commands(const char *line);
 // تنظيف الحواف والمسافات الزائدة في النصوص
 void trim_string(char *str) {
     int start = 0;
-    while (str[start] == ' ' || str[start] == '\t' || str[start] == '\r' || str[start] == '\n') {
+    while (str[start] == ' ' || str[start] == '\t' ||
+           str[start] == '\r' || str[start] == '\n') {
         start++;
     }
+
     if (start > 0) {
         int i = 0;
         while (str[start + i] != '\0') {
@@ -152,8 +154,11 @@ void trim_string(char *str) {
         }
         str[i] = '\0';
     }
+
     int len = str_len(str);
-    while (len > 0 && (str[len - 1] == ' ' || str[len - 1] == '\t' || str[len - 1] == '\r' || str[len - 1] == '\n')) {
+    while (len > 0 &&
+           (str[len - 1] == ' ' || str[len - 1] == '\t' ||
+            str[len - 1] == '\r' || str[len - 1] == '\n')) {
         str[len - 1] = '\0';
         len--;
     }
@@ -198,10 +203,13 @@ void run_dxs_script(const char *content) {
             i++;
             char inner[256];
             int idx = 0;
-            while (content[i] != '\0' && content[i] != ']' && idx < 255) {
+
+            while (content[i] != '\0' &&
+                   content[i] != ']' && idx < 255) {
                 inner[idx++] = content[i];
                 i++;
             }
+
             inner[idx] = '\0';
             if (content[i] == ']') i++;
 
@@ -217,28 +225,34 @@ void execute_command(const char *buf) {
     if (buf[0] == '\0') return;
 
     if (str_compare(buf, "help") == 0) {
-        const char *help_msg = "DixiOS Commands (v0.2.5):\n"
-                               "  help                  - Display this help list\n"
-                               "  info                  - Show OS info\n"
-                               "  print <text>          - Print text\n"
-                               "  create <name[/]>      - Create file or folder/\n"
-                               "  edit <fileName>       - Text editor\n"
-                               "  run <fileName>        - Execute file or .dxs script\n"
-                               "  list                  - List files & folders\n"
-                               "  goto <folderName/>    - Change directory\n"
-                               "  remove <name[/]>      - Remove file or folder\n"
-                               "  history               - Show last 5 commands\n"
-                               "  clear                 - Clear screen\n"
-                               "  Note: You can chain commands using ',' (e.g. help, print x)\n\n";
+        const char *help_msg =
+            "DixiOS Commands (v0.2.6):\n"
+            "  help                  - Display this help list\n"
+            "  info                  - Show OS info\n"
+            "  print <text>          - Print text\n"
+            "  create <name[/]>      - Create file or folder/\n"
+            "  edit <fileName>       - Text editor\n"
+            "  run <fileName>        - Execute file or .dxs script\n"
+            "  list                  - List files & folders\n"
+            "  goto <folderName/>    - Change directory\n"
+            "  remove <name[/]>      - Remove file or folder\n"
+            "  remove a              - Remove all files & folders\n"
+            "  history               - Show last 5 commands\n"
+            "  clear                 - Clear screen\n"
+            "  Note: You can chain commands using ',' "
+            "(e.g. help, print x)\n\n";
+
         print_string(help_msg, str_len(help_msg));
-    } 
+    }
     else if (str_compare(buf, "info") == 0) {
-        const char *info_msg = "OS : DixiOS\n"
-                              "Version : v0.2.5\n"
-                              "Architecture : x86_32\n"
-                              "Script Engine : DXS Multi-Command Supported (.dxs)\n"
-                              "Chaining Support : Enabled (,) separator\n"
-                              "Author : BrCraft131313\n\n";
+        const char *info_msg =
+            "OS : DixiOS\n"
+            "Version : v0.2.6\n"
+            "Architecture : x86_32\n"
+            "Script Engine : DXS Multi-Command Supported (.dxs)\n"
+            "Chaining Support : Enabled (,) separator\n"
+            "Author : BrCraft131313\n\n";
+
         print_string(info_msg, str_len(info_msg));
     }
     else if (str_starts_with(buf, "print ")) {
@@ -272,6 +286,7 @@ void execute_command(const char *buf) {
             fs[slot].size = 0;
             fs[slot].content[0] = '\0';
             str_copy(fs[slot].name, name);
+
             if (is_dir) {
                 print_string("Folder created successfully.\n", 29);
             } else {
@@ -286,7 +301,10 @@ void execute_command(const char *buf) {
         int idx = find_file(filename);
 
         if (idx == -1) {
-            print_string("Error: File not found! Create it first with 'create'.\n", 54);
+            print_string(
+                "Error: File not found! Create it first with 'create'.\n",
+                54
+            );
             return;
         }
 
@@ -300,7 +318,9 @@ void execute_command(const char *buf) {
         print_string("Enter file content below:\n", 26);
 
         char edit_buf[MAX_FILE_SIZE];
-        for (int i = 0; i < MAX_FILE_SIZE; i++) edit_buf[i] = 0;
+        for (int i = 0; i < MAX_FILE_SIZE; i++) {
+            edit_buf[i] = 0;
+        }
 
         int bytes = read_string(edit_buf, MAX_FILE_SIZE - 1);
         if (bytes > 0) {
@@ -313,7 +333,7 @@ void execute_command(const char *buf) {
         }
 
         print_string("Action (S/C/E): ", 16);
-        char action[10];
+        char action[10] = {0};
         read_string(action, 9);
 
         if (action[0] == 'S' || action[0] == 's') {
@@ -336,7 +356,11 @@ void execute_command(const char *buf) {
         }
 
         int len = str_len(filename);
-        if (len > 4 && filename[len - 4] == '.' && filename[len - 3] == 'd' && filename[len - 2] == 'x' && filename[len - 1] == 's') {
+        if (len > 4 &&
+            filename[len - 4] == '.' &&
+            filename[len - 3] == 'd' &&
+            filename[len - 2] == 'x' &&
+            filename[len - 1] == 's') {
             run_dxs_script(fs[idx].content);
         } else {
             print_string("Executing file content:\n", 24);
@@ -346,13 +370,16 @@ void execute_command(const char *buf) {
     }
     else if (str_compare(buf, "list") == 0) {
         print_string("Directory Listing:\n", 19);
+
         for (int i = 0; i < MAX_FILES; i++) {
             if (fs[i].used) {
                 print_string("  ", 2);
                 print_string(fs[i].name, str_len(fs[i].name));
+
                 if (fs[i].is_folder) {
                     print_string(" <DIR>", 6);
                 }
+
                 print_string("\n", 1);
             }
         }
@@ -370,22 +397,51 @@ void execute_command(const char *buf) {
     }
     else if (str_starts_with(buf, "remove ")) {
         const char *name = buf + 7;
-        int idx = find_file(name);
 
-        if (idx != -1) {
-            fs[idx].used = 0;
-            print_string("Removed successfully.\n", 22);
+        // remove a يحذف جميع الملفات والمجلدات الافتراضية
+        if (str_compare(name, "a") == 0) {
+            int removed_count = 0;
+
+            for (int i = 0; i < MAX_FILES; i++) {
+                if (fs[i].used) {
+                    fs[i].used = 0;
+                    fs[i].size = 0;
+                    fs[i].content[0] = '\0';
+                    fs[i].name[0] = '\0';
+                    fs[i].is_folder = 0;
+                    removed_count++;
+                }
+            }
+
+            if (removed_count > 0) {
+                print_string("All files and folders removed.\n", 32);
+            } else {
+                print_string("No files or folders to remove.\n", 31);
+            }
         } else {
-            print_string("Error: File or folder not found!\n", 33);
+            int idx = find_file(name);
+
+            if (idx != -1) {
+                fs[idx].used = 0;
+                fs[idx].size = 0;
+                fs[idx].content[0] = '\0';
+                fs[idx].name[0] = '\0';
+                fs[idx].is_folder = 0;
+                print_string("Removed successfully.\n", 22);
+            } else {
+                print_string("Error: File or folder not found!\n", 33);
+            }
         }
     }
     else if (str_compare(buf, "history") == 0) {
-        print_string("Command History (Last 5):\n", 25);
+        print_string("Command History (Last 5):\n", 26);
+
         for (int i = 0; i < history_count; i++) {
             print_string("  ", 2);
             print_string(history[i], str_len(history[i]));
             print_string("\n", 1);
         }
+
         print_string("\n", 1);
     }
     else if (str_compare(buf, "clear") == 0) {
@@ -404,10 +460,12 @@ void _start() {
         fs[i].used = 0;
     }
 
-    const char banner[] = "\n====================================\n"
-                          " DixiOS i386 Init Started (v0.2.5)\n"
-                          "====================================\n\n"
-                          "Type 'help' to see available commands.\n\n";
+    const char banner[] =
+        "\n====================================\n"
+        " DixiOS i386 Init Started (v0.2.6)\n"
+        "====================================\n\n"
+        "Type 'help' to see available commands.\n\n";
+
     print_string(banner, str_len(banner));
 
     char buf[128];
@@ -416,9 +474,11 @@ void _start() {
         print_string("DixiOS:", 7);
         print_string(current_dir, str_len(current_dir));
         print_string("# ", 2);
-        
-        for (int i = 0; i < 128; i++) buf[i] = 0;
-        
+
+        for (int i = 0; i < 128; i++) {
+            buf[i] = 0;
+        }
+
         int n = read_string(buf, 127);
         if (n <= 0) continue;
 
