@@ -74,7 +74,11 @@ Features:
 
   - Add , ( && )
   - Update DXS Syntax ex( [name: help, help] ❎ [help] ✅ )
- 
+    
+ October 28: Build Sixth Sub-Version From Second Version (0.2.6)
+  Features:
+   - Add remove a Command
+
 ## Build Scripts
 
 There are two files that start with the same name, but in different programming languages.
