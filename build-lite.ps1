@@ -18,7 +18,7 @@ function Initialize-Sources {
     }
     New-Item -ItemType Directory -Path $TEMP_BUILD_DIR | Out-Null
 
-    $DEFAULT_DIRS = @("UserSpace/bin", "boot", "out")
+    $DEFAULT_DIRS = @("UserSpace/bin", "boot")
 
     foreach ($dir in $DEFAULT_DIRS) {
         if (Test-Path "./$dir") {
