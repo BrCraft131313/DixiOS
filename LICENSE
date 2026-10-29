@@ -18,7 +18,7 @@ Mandatory Unlocked Bootloader Category:
 The bootloader must be unlocked and user-accessible by default for the following device classes:
 Smartphones
 Tablets
-Laptops powered by ARM processors
+Laptops
 Other Device Categories:
 For all other hardware categories not explicitly listed above, vendors retain the right to manage and define their own bootloader lock policies.
 Section 4: Enforcement & Legal Remedies
