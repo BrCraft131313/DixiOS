@@ -11,7 +11,7 @@ prepare_sources() {
     rm -rf "$TEMP_BUILD_DIR"
     mkdir -p "$TEMP_BUILD_DIR"
 
-    DEFAULT_DIRS=("UserSpace/bin/" "boot" "out")
+    DEFAULT_DIRS=("UserSpace/bin/" "boot")
 
     for dir in "${DEFAULT_DIRS[@]}"; do
         if [ -d "./$dir" ]; then
