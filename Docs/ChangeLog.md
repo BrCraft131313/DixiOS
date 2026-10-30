@@ -68,8 +68,8 @@ October 30: Build Seventh Sub-Version From Second Version (0.2.7)
     
 Add This Commands :
 
-      - help [cmd]
-      - color
-      - calc
-      - alias
-        Add Variables ( Placeholder Feature )
+- help [cmd]
+- color
+- calc
+- alias
+ Add Variables ( Placeholder Feature )
