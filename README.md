@@ -15,7 +15,6 @@ DixiOS is A Modular & x86_32 OS Based on
 - PowerShell For Build DixiOS In Windows && MARKDOWN For Write Docs
 
 And Runs In Limbo X86 Emulator ( core2duo )
-
 ## History 
 
  April 3: Create The Repository In the name of the BOSP
@@ -76,16 +75,23 @@ Features:
   - Update DXS Syntax ex( [name: help, help] ❎ [help] ✅ )
     
  October 28: Build Sixth Sub-Version From Second Version (0.2.6)
+  
   Features:
    - Add remove a Command
+
 October 30: Build Seventh Sub-Version From Second Version (0.2.7)
+ 
  Features:
-    Add This Commands :
-      - help [cmd]
-      - color
-      - calc
-      - alias
-        Add Variables ( Placeholder Feature )
+    
+Add This Commands :
+
+- help [cmd]
+- color
+- calc
+- alias
+
+Add Variables ( Placeholder Feature )
+
 ## Build Scripts
 
 There are two files that start with the same name, but in different programming languages.
