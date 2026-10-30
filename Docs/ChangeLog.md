@@ -72,4 +72,5 @@ Add This Commands :
 - color
 - calc
 - alias
- Add Variables ( Placeholder Feature )
+
+Add Variables ( Placeholder Feature )
