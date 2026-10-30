@@ -58,13 +58,18 @@ Features:
   - Update DXS Syntax ex( [name: help, help] ❎ [help] ✅ )
     
  October 28: Build Sixth Sub-Version From Second Version (0.2.6)
+  
   Features:
    - Add remove a Command
+
 October 30: Build Seventh Sub-Version From Second Version (0.2.7)
+ 
  Features:
+    
     Add This Commands :
       - help [cmd]
       - color
       - calc
       - alias
+        
         Add Variables ( Placeholder Feature )
