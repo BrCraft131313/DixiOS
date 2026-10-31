@@ -1,4 +1,4 @@
-// init.c - DixiOS i386 User-Space Init Process (v0.2.7 - Part 1)
+// init.c - DixiOS i386 User-Space Init Process (v0.2.8 - Part 1)
 
 #define MAX_FILES 16
 #define MAX_FILENAME 32
@@ -197,30 +197,43 @@ void int_to_str_signed(int val, char *buf) {
     buf[j] = '\0';
 }
 
+// استبدال المتغيرات (-var) بقيمها
 void expand_vars(const char *src, char *dest, int max_len) {
     int i = 0, j = 0;
     while (src[i] != '\0' && j < max_len - 1) {
-        if (src[i] == '$') {
-            i++;
-            char vname[32];
-            int v_idx = 0;
-            while (src[i] != '\0' && src[i] != ' ' && src[i] != '\t' && src[i] != '\n' && src[i] != ',' && v_idx < 31) {
-                vname[v_idx++] = src[i++];
-            }
-            vname[v_idx] = '\0';
-
-            int found = 0;
-            for (int v = 0; v < MAX_VARS; v++) {
-                if (vars[v].used && str_compare(vars[v].name, vname) == 0) {
-                    int k = 0;
-                    while (vars[v].value[k] != '\0' && j < max_len - 1) {
-                        dest[j++] = vars[v].value[k++];
-                    }
-                    found = 1;
-                    break;
+        if (src[i] == '-') {
+            // التحقق مما إذا كان الرمز يشير لمتغير (يسبقه مسافة أو بداية سطر، ويليها اسم متغير)
+            if (i == 0 || src[i - 1] == ' ' || src[i - 1] == '\t' || src[i - 1] == ',') {
+                i++;
+                char vname[32];
+                int v_idx = 0;
+                while (src[i] != '\0' && src[i] != ' ' && src[i] != '\t' && src[i] != '\n' && src[i] != ',' && v_idx < 31) {
+                    vname[v_idx++] = src[i++];
                 }
+                vname[v_idx] = '\0';
+
+                int found = 0;
+                for (int v = 0; v < MAX_VARS; v++) {
+                    if (vars[v].used && str_compare(vars[v].name, vname) == 0) {
+                        int k = 0;
+                        while (vars[v].value[k] != '\0' && j < max_len - 1) {
+                            dest[j++] = vars[v].value[k++];
+                        }
+                        found = 1;
+                        break;
+                    }
+                }
+                if (!found) {
+                    // إذا لم يوجد المتغير، نُبقي الإشارة واسم المتغير كما هو
+                    dest[j++] = '-';
+                    int k = 0;
+                    while (vname[k] != '\0' && j < max_len - 1) {
+                        dest[j++] = vname[k++];
+                    }
+                }
+            } else {
+                dest[j++] = src[i++];
             }
-            if (!found) {}
         } else {
             dest[j++] = src[i++];
         }
@@ -341,7 +354,7 @@ void run_dxs_script(const char *content) {
         }
     }
 }
-// init.c - DixiOS i386 User-Space Init Process (v0.2.7 - Part 2)
+// init.c - DixiOS i386 User-Space Init Process (v0.2.8 - Part 2)
 
 void execute_command(const char *cmd_line) {
     char expanded_buf[128];
@@ -359,10 +372,10 @@ void execute_command(const char *cmd_line) {
 
     if (str_compare(expanded_buf, "help") == 0) {
         const char *help_msg = 
-            "DixiOS Commands (v0.2.7):\n"
+            "DixiOS Commands (v0.2.8):\n"
             "  help [cmd]            - Display help or specific command guide\n"
             "  info                  - Show OS info\n"
-            "  print <text>          - Print text (supports $var)\n"
+            "  print <text>          - Print text (supports -var)\n"
             "  create <name[/]>      - Create file or folder/\n"
             "  edit <fileName>       - Text editor\n"
             "  run <fileName>        - Execute file or .dxs script\n"
@@ -372,7 +385,7 @@ void execute_command(const char *cmd_line) {
             "  remove a              - Remove all files & folders\n"
             "  alias <name> = <cmd>  - Create a custom shortcut\n"
             "  color <HEX>           - Change terminal color (e.g. #0397cd)\n"
-            "  calc <n1> <op> <n2>   - Arithmetic calculator (+, -, *, /, %%)\n"
+            "  calc <n1> <op> <n2>   - Calculator (+, -, *, /, mod)\n"
             "  set <var> = <val>     - Define a variable\n"
             "  history               - Show last 5 commands\n"
             "  clear                 - Clear screen\n\n";
@@ -394,7 +407,7 @@ void execute_command(const char *cmd_line) {
         } else if (str_compare(target_cmd, "info") == 0) {
             print_string("Info: Shows system information, OS version, architecture, and author.\n\n", 74);
         } else if (str_compare(target_cmd, "print") == 0) {
-            print_string("Print: Outputs the specified text to the terminal. Supports variables like $x.\nUsage: print <text>\n\n", 94);
+            print_string("Print: Outputs the specified text to the terminal. Supports variables like -x.\nUsage: print <text>\n\n", 94);
         } else if (str_compare(target_cmd, "create") == 0) {
             print_string("Create: Creates a new file or folder (if name ends with '/').\nUsage: create <name[/]>\n\n", 89);
         } else if (str_compare(target_cmd, "edit") == 0) {
@@ -412,9 +425,9 @@ void execute_command(const char *cmd_line) {
         } else if (str_compare(target_cmd, "color") == 0) {
             print_string("Color: Changes terminal text color using HEX code.\nUsage: color #RRGGBB\nExample: color #0397cd\n\n", 97);
         } else if (str_compare(target_cmd, "calc") == 0) {
-            print_string("Calc: Performs basic arithmetic calculations (+, -, *, /, %%).\nUsage: calc <num> <op> <num>\nExample: calc 2 + 2\n\n", 104);
+            print_string("Calc: Performs basic arithmetic calculations (+, -, *, /, mod).\nUsage: calc <num> <op> <num>\nExample: calc 5 mod 2\n\n", 107);
         } else if (str_compare(target_cmd, "set") == 0) {
-            print_string("Set: Defines a variable for script and command use.\nUsage: set <var> = <value>\nUsage in print: print $var\n\n", 98);
+            print_string("Set: Defines a variable for script and command use.\nUsage: set <var> = <value>\nUsage in print: print -var\n\n", 98);
         } else {
             print_string("Error: No detailed help available for '", 39);
             print_string(target_cmd, str_len(target_cmd));
@@ -424,10 +437,10 @@ void execute_command(const char *cmd_line) {
     else if (str_compare(expanded_buf, "info") == 0) {
         const char *info_msg = 
             "OS : DixiOS\n"
-            "Version : v0.2.7\n"
+            "Version : v0.2.8\n"
             "Architecture : x86_32\n"
             "Script Engine : DXS Multi-Command Supported (.dxs)\n"
-            "Features : Aliases, Calculator, Variables, Custom Colors\n"
+            "Features : Aliases, Calculator (mod), Variables (-var), Custom Colors\n"
             "Author : BrCraft131313\n\n";
 
         print_string(info_msg, str_len(info_msg));
@@ -540,8 +553,26 @@ void execute_command(const char *cmd_line) {
         }
         p += idx1;
         while (*p == ' ' || *p == '\t') p++;
-        char op = *p;
-        p++;
+        
+        // التحقق من العمليات الحسابية (+, -, *, /) أو كلمة (mod)
+        char op_word[16];
+        int ow_idx = 0;
+        int is_mod = 0;
+
+        if (*p == '+' || *p == '-' || *p == '*' || *p == '/') {
+            op_word[0] = *p;
+            op_word[1] = '\0';
+            p++;
+        } else {
+            while (*p != '\0' && *p != ' ' && *p != '\t' && ow_idx < 15) {
+                op_word[ow_idx++] = *p++;
+            }
+            op_word[ow_idx] = '\0';
+            if (str_compare(op_word, "mod") == 0) {
+                is_mod = 1;
+            }
+        }
+
         while (*p == ' ' || *p == '\t') p++;
         int num2, idx2;
         if (!parse_int(p, &num2, &idx2)) {
@@ -551,27 +582,28 @@ void execute_command(const char *cmd_line) {
 
         int res = 0;
         int error = 0;
-        if (op == '+') res = num1 + num2;
-        else if (op == '-') res = num1 - num2;
-        else if (op == '*') res = num1 * num2;
-        else if (op == '/') {
-            if (num2 == 0) {
-                print_string("Error: Division by zero!\n", 25);
-                error = 1;
+        if (!is_mod) {
+            if (op_word[0] == '+') res = num1 + num2;
+            else if (op_word[0] == '-') res = num1 - num2;
+            else if (op_word[0] == '*') res = num1 * num2;
+            else if (op_word[0] == '/') {
+                if (num2 == 0) {
+                    print_string("Error: Division by zero!\n", 25);
+                    error = 1;
+                } else {
+                    res = num1 / num2;
+                }
             } else {
-                res = num1 / num2;
+                print_string("Error: Unknown operator. Use +, -, *, /, mod\n", 47);
+                error = 1;
             }
-        }
-        else if (op == '%') {
+        } else {
             if (num2 == 0) {
                 print_string("Error: Modulo by zero!\n", 23);
                 error = 1;
             } else {
                 res = num1 % num2;
             }
-        } else {
-            print_string("Error: Unknown operator. Use +, -, *, /, %\n", 45);
-            error = 1;
         }
 
         if (!error) {
@@ -783,7 +815,7 @@ void _start() {
 
     const char banner[] = 
         "\n====================================\n"
-        " DixiOS i386 Init Started (v0.2.7)\n"
+        " DixiOS i386 Init Started (v0.2.8)\n"
         "====================================\n\n"
         "Type 'help' to see available commands.\n\n";
 
