@@ -92,6 +92,13 @@ Add This Commands :
 
 Add Variables ( Placeholder Feature )
 
+October 31: Build Eighth Sub-Version From Second Version (0.2.8)
+
+ Features:
+
+  - Add Variables ( Full Feature )
+  - Replace % to mod
+
 ## Build Scripts
 
 There are two files that start with the same name, but in different programming languages.
