@@ -74,3 +74,10 @@ Add This Commands :
 - alias
 
 Add Variables ( Placeholder Feature )
+
+October 31: Build Eighth Sub-Version From Second Version (0.2.8)
+
+ Features:
+
+  - Add Variables ( Full Feature )
+  - Replace % to mod
