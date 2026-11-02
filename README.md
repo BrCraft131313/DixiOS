@@ -99,6 +99,18 @@ October 31: Build Eighth Sub-Version From Second Version (0.2.8)
   - Add Variables ( Full Feature )
   - Replace % to mod
 
+November 2: Build Ninth Sub-Version From Second Version (0.2.9)
+
+  Features:
+
+  - Add alias -rm
+  - Add alias -rm a
+  - Add alias -ls
+  - Add var -rm
+  - Add var -rm a
+  - Add var -ls
+  - Add history -rm
+
 ## Build Scripts
 
 There are two files that start with the same name, but in different programming languages.
