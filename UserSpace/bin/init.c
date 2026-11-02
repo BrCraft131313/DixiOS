@@ -1,4 +1,4 @@
-// init.c - DixiOS i386 User-Space Init Process (v0.2.8 - Part 1)
+// init.c - DixiOS i386 User-Space Init Process (v0.2.9 - Part 1)
 
 #define MAX_FILES 16
 #define MAX_FILENAME 32
@@ -149,6 +149,7 @@ int find_file(const char *name) {
 
 void execute_command(const char *cmd_line);
 void process_chained_commands(const char *line);
+// init.c - DixiOS i386 User-Space Init Process (v0.2.9 - Part 2)
 
 void trim_string(char *str) {
     int start = 0;
@@ -197,42 +198,35 @@ void int_to_str_signed(int val, char *buf) {
     buf[j] = '\0';
 }
 
-// استبدال المتغيرات (-var) بقيمها
 void expand_vars(const char *src, char *dest, int max_len) {
     int i = 0, j = 0;
     while (src[i] != '\0' && j < max_len - 1) {
-        if (src[i] == '-') {
-            // التحقق مما إذا كان الرمز يشير لمتغير (يسبقه مسافة أو بداية سطر، ويليها اسم متغير)
-            if (i == 0 || src[i - 1] == ' ' || src[i - 1] == '\t' || src[i - 1] == ',') {
-                i++;
-                char vname[32];
-                int v_idx = 0;
-                while (src[i] != '\0' && src[i] != ' ' && src[i] != '\t' && src[i] != '\n' && src[i] != ',' && v_idx < 31) {
-                    vname[v_idx++] = src[i++];
-                }
-                vname[v_idx] = '\0';
+        if (src[i] == '-' && ((src[i+1] >= 'a' && src[i+1] <= 'z') || (src[i+1] >= 'A' && src[i+1] <= 'Z') || src[i+1] == '_')) {
+            i++;
+            char vname[32];
+            int v_idx = 0;
+            while (src[i] != '\0' && src[i] != ' ' && src[i] != '\t' && src[i] != '\n' && src[i] != ',' && v_idx < 31) {
+                vname[v_idx++] = src[i++];
+            }
+            vname[v_idx] = '\0';
 
-                int found = 0;
-                for (int v = 0; v < MAX_VARS; v++) {
-                    if (vars[v].used && str_compare(vars[v].name, vname) == 0) {
-                        int k = 0;
-                        while (vars[v].value[k] != '\0' && j < max_len - 1) {
-                            dest[j++] = vars[v].value[k++];
-                        }
-                        found = 1;
-                        break;
-                    }
-                }
-                if (!found) {
-                    // إذا لم يوجد المتغير، نُبقي الإشارة واسم المتغير كما هو
-                    dest[j++] = '-';
+            int found = 0;
+            for (int v = 0; v < MAX_VARS; v++) {
+                if (vars[v].used && str_compare(vars[v].name, vname) == 0) {
                     int k = 0;
-                    while (vname[k] != '\0' && j < max_len - 1) {
-                        dest[j++] = vname[k++];
+                    while (vars[v].value[k] != '\0' && j < max_len - 1) {
+                        dest[j++] = vars[v].value[k++];
                     }
+                    found = 1;
+                    break;
                 }
-            } else {
-                dest[j++] = src[i++];
+            }
+            if (!found) {
+                dest[j++] = '-';
+                int k = 0;
+                while (vname[k] != '\0' && j < max_len - 1) {
+                    dest[j++] = vname[k++];
+                }
             }
         } else {
             dest[j++] = src[i++];
@@ -354,7 +348,7 @@ void run_dxs_script(const char *content) {
         }
     }
 }
-// init.c - DixiOS i386 User-Space Init Process (v0.2.8 - Part 2)
+// init.c - DixiOS i386 User-Space Init Process (v0.2.9 - Part 3)
 
 void execute_command(const char *cmd_line) {
     char expanded_buf[128];
@@ -372,7 +366,7 @@ void execute_command(const char *cmd_line) {
 
     if (str_compare(expanded_buf, "help") == 0) {
         const char *help_msg = 
-            "DixiOS Commands (v0.2.8):\n"
+            "DixiOS Commands (v0.2.9):\n"
             "  help [cmd]            - Display help or specific command guide\n"
             "  info                  - Show OS info\n"
             "  print <text>          - Print text (supports -var)\n"
@@ -384,10 +378,15 @@ void execute_command(const char *cmd_line) {
             "  remove <name[/]>      - Remove file or folder\n"
             "  remove a              - Remove all files & folders\n"
             "  alias <name> = <cmd>  - Create a custom shortcut\n"
+            "  alias -ls             - List all aliases\n"
+            "  alias -rm <name>|a    - Remove alias or all aliases\n"
+            "  var -ls               - List all variables\n"
+            "  var -rm <name>|a      - Remove variable or all variables\n"
             "  color <HEX>           - Change terminal color (e.g. #0397cd)\n"
             "  calc <n1> <op> <n2>   - Calculator (+, -, *, /, mod)\n"
             "  set <var> = <val>     - Define a variable\n"
             "  history               - Show last 5 commands\n"
+            "  history -rm           - Clear command history\n"
             "  clear                 - Clear screen\n\n";
 
         print_string(help_msg, str_len(help_msg));
@@ -421,13 +420,17 @@ void execute_command(const char *cmd_line) {
         } else if (str_compare(target_cmd, "remove") == 0) {
             print_string("Remove: Deletes a specific file/folder or all files ('remove a').\nUsage: remove <name[/]> | remove a\n\n", 100);
         } else if (str_compare(target_cmd, "alias") == 0) {
-            print_string("Alias: Creates a custom shortcut for any command.\nUsage: alias <name> = <command>\nExample: alias h = help\n\n", 109);
+            print_string("Alias: Creates, lists, or removes custom shortcuts.\nUsage: alias <name> = <cmd> | alias -ls | alias -rm <name>|a\n\n", 108);
+        } else if (str_compare(target_cmd, "var") == 0) {
+            print_string("Var: Lists or removes defined variables.\nUsage: var -ls | var -rm <name>|a\n\n", 69);
         } else if (str_compare(target_cmd, "color") == 0) {
             print_string("Color: Changes terminal text color using HEX code.\nUsage: color #RRGGBB\nExample: color #0397cd\n\n", 97);
         } else if (str_compare(target_cmd, "calc") == 0) {
             print_string("Calc: Performs basic arithmetic calculations (+, -, *, /, mod).\nUsage: calc <num> <op> <num>\nExample: calc 5 mod 2\n\n", 107);
         } else if (str_compare(target_cmd, "set") == 0) {
             print_string("Set: Defines a variable for script and command use.\nUsage: set <var> = <value>\nUsage in print: print -var\n\n", 98);
+        } else if (str_compare(target_cmd, "history") == 0) {
+            print_string("History: Shows last 5 commands or clears history ('history -rm').\nUsage: history | history -rm\n\n", 93);
         } else {
             print_string("Error: No detailed help available for '", 39);
             print_string(target_cmd, str_len(target_cmd));
@@ -437,10 +440,10 @@ void execute_command(const char *cmd_line) {
     else if (str_compare(expanded_buf, "info") == 0) {
         const char *info_msg = 
             "OS : DixiOS\n"
-            "Version : v0.2.8\n"
+            "Version : v0.2.9\n"
             "Architecture : x86_32\n"
             "Script Engine : DXS Multi-Command Supported (.dxs)\n"
-            "Features : Aliases, Calculator (mod), Variables (-var), Custom Colors\n"
+            "Features : Aliases (-ls/-rm), Variables (-ls/-rm), History (-rm), Calc (mod)\n"
             "Author : BrCraft131313\n\n";
 
         print_string(info_msg, str_len(info_msg));
@@ -452,6 +455,60 @@ void execute_command(const char *cmd_line) {
     }
     else if (str_compare(expanded_buf, "print") == 0) {
         print_string("\n", 1);
+    }
+    else if (str_compare(expanded_buf, "alias -ls") == 0) {
+        print_string("Defined Aliases:\n", 17);
+        int count = 0;
+        for (int i = 0; i < MAX_ALIASES; i++) {
+            if (aliases[i].used) {
+                print_string("  ", 2);
+                print_string(aliases[i].name, str_len(aliases[i].name));
+                print_string(" = ", 3);
+                print_string(aliases[i].command, str_len(aliases[i].command));
+                print_string("\n", 1);
+                count++;
+            }
+        }
+        if (count == 0) {
+            print_string("  (No aliases defined)\n", 23);
+        }
+        print_string("\n", 1);
+    }
+    else if (str_starts_with(expanded_buf, "alias -rm ")) {
+        const char *arg = expanded_buf + 10;
+        trim_string((char*)arg);
+        if (str_compare(arg, "a") == 0) {
+            int removed = 0;
+            for (int i = 0; i < MAX_ALIASES; i++) {
+                if (aliases[i].used) {
+                    aliases[i].used = 0;
+                    aliases[i].name[0] = '\0';
+                    aliases[i].command[0] = '\0';
+                    removed++;
+                }
+            }
+            if (removed > 0) {
+                print_string("All aliases removed.\n", 21);
+            } else {
+                print_string("No aliases to remove.\n", 22);
+            }
+        } else {
+            int found = -1;
+            for (int i = 0; i < MAX_ALIASES; i++) {
+                if (aliases[i].used && str_compare(aliases[i].name, arg) == 0) {
+                    found = i;
+                    break;
+                }
+            }
+            if (found != -1) {
+                aliases[found].used = 0;
+                aliases[found].name[0] = '\0';
+                aliases[found].command[0] = '\0';
+                print_string("Alias removed successfully.\n", 28);
+            } else {
+                print_string("Error: Alias not found!\n", 24);
+            }
+        }
     }
     else if (str_starts_with(expanded_buf, "alias ")) {
         char *p = (char*)(expanded_buf + 6);
@@ -494,6 +551,60 @@ void execute_command(const char *cmd_line) {
             }
         } else {
             print_string("Error: Missing '=' in alias definition. Use: alias name = command\n", 67);
+        }
+    }
+    else if (str_compare(expanded_buf, "var -ls") == 0) {
+        print_string("Defined Variables:\n", 19);
+        int count = 0;
+        for (int i = 0; i < MAX_VARS; i++) {
+            if (vars[i].used) {
+                print_string("  -", 3);
+                print_string(vars[i].name, str_len(vars[i].name));
+                print_string(" = ", 3);
+                print_string(vars[i].value, str_len(vars[i].value));
+                print_string("\n", 1);
+                count++;
+            }
+        }
+        if (count == 0) {
+            print_string("  (No variables defined)\n", 25);
+        }
+        print_string("\n", 1);
+    }
+    else if (str_starts_with(expanded_buf, "var -rm ")) {
+        const char *arg = expanded_buf + 8;
+        trim_string((char*)arg);
+        if (str_compare(arg, "a") == 0) {
+            int removed = 0;
+            for (int i = 0; i < MAX_VARS; i++) {
+                if (vars[i].used) {
+                    vars[i].used = 0;
+                    vars[i].name[0] = '\0';
+                    vars[i].value[0] = '\0';
+                    removed++;
+                }
+            }
+            if (removed > 0) {
+                print_string("All variables removed.\n", 23);
+            } else {
+                print_string("No variables to remove.\n", 24);
+            }
+        } else {
+            int found = -1;
+            for (int i = 0; i < MAX_VARS; i++) {
+                if (vars[i].used && str_compare(vars[i].name, arg) == 0) {
+                    found = i;
+                    break;
+                }
+            }
+            if (found != -1) {
+                vars[found].used = 0;
+                vars[found].name[0] = '\0';
+                vars[found].value[0] = '\0';
+                print_string("Variable removed successfully.\n", 30);
+            } else {
+                print_string("Error: Variable not found!\n", 26);
+            }
         }
     }
     else if (str_starts_with(expanded_buf, "set ")) {
@@ -554,7 +665,6 @@ void execute_command(const char *cmd_line) {
         p += idx1;
         while (*p == ' ' || *p == '\t') p++;
         
-        // التحقق من العمليات الحسابية (+, -, *, /) أو كلمة (mod)
         char op_word[16];
         int ow_idx = 0;
         int is_mod = 0;
@@ -613,7 +723,9 @@ void execute_command(const char *cmd_line) {
             print_string(res_str, str_len(res_str));
             print_string("\n", 1);
         }
-    }
+}
+// init.c - DixiOS i386 User-Space Init Process (v0.2.9 - Part 4)
+
     else if (str_starts_with(expanded_buf, "create ")) {
         const char *name = expanded_buf + 7;
         int is_dir = 0;
@@ -780,6 +892,13 @@ void execute_command(const char *cmd_line) {
             }
         }
     }
+    else if (str_compare(expanded_buf, "history -rm") == 0) {
+        history_count = 0;
+        for (int i = 0; i < 5; i++) {
+            history[i][0] = '\0';
+        }
+        print_string("Command history cleared.\n", 26);
+    }
     else if (str_compare(expanded_buf, "history") == 0) {
         print_string("Command History (Last 5):\n", 26);
 
@@ -815,7 +934,7 @@ void _start() {
 
     const char banner[] = 
         "\n====================================\n"
-        " DixiOS i386 Init Started (v0.2.8)\n"
+        " DixiOS i386 Init Started (v0.2.9)\n"
         "====================================\n\n"
         "Type 'help' to see available commands.\n\n";
 
