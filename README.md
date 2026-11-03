@@ -59,6 +59,6 @@ Greetings to everyone who has used DixiOS or read the documentation.
 BrCraft131313,
 
 ## Related projects
-[![](https://raw.githubusercontent.com/BrCraft131313/DixiOS/Home/LegUI.png)](https://github.com/BrCraft131313/LegxUI/)
-[![](https://raw.githubusercontent.com/BrCraft131313/DixiOS/Home/LegUI.png)](https://github.com/BrCraft131313/LegxUI-Calc/)
-[![](https://raw.githubusercontent.com/BrCraft131313/DixiOS/Home/LegUI.png)](https://github.com/BrCraft131313/LegxUI-Clock/)
+[![](https://raw.githubusercontent.com/BrCraft131313/DixiOS/Home/LegxUI.png)](https://github.com/BrCraft131313/LegxUI/)
+[![](https://raw.githubusercontent.com/BrCraft131313/DixiOS/Home/LegxUI.png)](https://github.com/BrCraft131313/LegxUI-Calc/)
+[![](https://raw.githubusercontent.com/BrCraft131313/DixiOS/Home/LegxUI.png)](https://github.com/BrCraft131313/LegxUI-Clock/)
