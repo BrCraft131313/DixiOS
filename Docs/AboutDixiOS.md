@@ -20,6 +20,11 @@ And Runs In Limbo X86 Emulator ( core2duo )
 
  [History](https://github.com/BrCraft131313/DixiOS/blob/Home/Docs/ChangeLog.md)
 
+
+ ## User Guide 
+
+ [User Guide](https://github.com/BrCraft131313/DixiOS/blob/Home/Docs/UserGuide/UserGuide.md)
+
 ## Build Scripts
 
 There are two files that start with the same name, but in different programming languages.
