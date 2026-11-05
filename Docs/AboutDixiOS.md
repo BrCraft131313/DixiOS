@@ -13,6 +13,7 @@ DixiOS is A Modular & x86_32 OS Based on
 - BASH
 - C
 - PowerShell For Build DixiOS In Windows && MARKDOWN For Write Docs
+- He Depends On Linux Kernel 6.18.40 LTS
 
 And Runs In Limbo X86 Emulator ( core2duo )
 ## History 
