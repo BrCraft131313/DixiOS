@@ -1,4 +1,4 @@
-// init.c - DixiOS i386 User-Space Init Process (v0.2.9 - Part 1)
+// init.c - DixiOS i386 User-Space Init Process (v0.2.10 - Part 1)
 
 #define MAX_FILES 16
 #define MAX_FILENAME 32
@@ -149,7 +149,8 @@ int find_file(const char *name) {
 
 void execute_command(const char *cmd_line);
 void process_chained_commands(const char *line);
-// init.c - DixiOS i386 User-Space Init Process (v0.2.9 - Part 2)
+void print_banner(void);
+// init.c - DixiOS i386 User-Space Init Process (v0.2.10 - Part 2)
 
 void trim_string(char *str) {
     int start = 0;
@@ -348,7 +349,16 @@ void run_dxs_script(const char *content) {
         }
     }
 }
-// init.c - DixiOS i386 User-Space Init Process (v0.2.9 - Part 3)
+
+void print_banner(void) {
+    const char banner[] = 
+        "\n====================================\n"
+        " DixiOS i386 Init Started (v0.2.10)\n"
+        "====================================\n\n"
+        "Type 'help' to see available commands.\n\n";
+    print_string(banner, str_len(banner));
+}
+// init.c - DixiOS i386 User-Space Init Process (v0.2.10 - Part 3)
 
 void execute_command(const char *cmd_line) {
     char expanded_buf[128];
@@ -366,9 +376,11 @@ void execute_command(const char *cmd_line) {
 
     if (str_compare(expanded_buf, "help") == 0) {
         const char *help_msg = 
-            "DixiOS Commands (v0.2.9):\n"
+            "DixiOS Commands (v0.2.10):\n"
             "  help [cmd]            - Display help or specific command guide\n"
             "  info                  - Show OS info\n"
+            "  read <file.txt>       - Display content of .txt files\n"
+            "  off                   - Shutdown emulator safely\n"
             "  print <text>          - Print text (supports -var)\n"
             "  create <name[/]>      - Create file or folder/\n"
             "  edit <fileName>       - Text editor\n"
@@ -405,6 +417,10 @@ void execute_command(const char *cmd_line) {
             print_string("Help: Displays available commands or detailed info about a specific command.\nUsage: help [command]\n\n", 94);
         } else if (str_compare(target_cmd, "info") == 0) {
             print_string("Info: Shows system information, OS version, architecture, and author.\n\n", 74);
+        } else if (str_compare(target_cmd, "read") == 0) {
+            print_string("Read: Reads and displays the content of text files ending in .txt.\nUsage: read <filename.txt>\n\n", 94);
+        } else if (str_compare(target_cmd, "off") == 0) {
+            print_string("Off: Displays shutdown message and pauses CPU.\nUsage: off\n\n", 57);
         } else if (str_compare(target_cmd, "print") == 0) {
             print_string("Print: Outputs the specified text to the terminal. Supports variables like -x.\nUsage: print <text>\n\n", 94);
         } else if (str_compare(target_cmd, "create") == 0) {
@@ -440,13 +456,47 @@ void execute_command(const char *cmd_line) {
     else if (str_compare(expanded_buf, "info") == 0) {
         const char *info_msg = 
             "OS : DixiOS\n"
-            "Version : v0.2.9\n"
+            "Version : v0.2.10\n"
             "Architecture : x86_32\n"
             "Script Engine : DXS Multi-Command Supported (.dxs)\n"
-            "Features : Aliases (-ls/-rm), Variables (-ls/-rm), History (-rm), Calc (mod)\n"
+            "Features : Aliases (-ls/-rm), Variables (-ls/-rm), History (-rm), Calc (mod), Read (.txt), Off\n"
             "Author : BrCraft131313\n\n";
 
         print_string(info_msg, str_len(info_msg));
+    }
+    else if (str_starts_with(expanded_buf, "read ")) {
+        const char *filename = expanded_buf + 5;
+        int len = str_len(filename);
+
+        if (len < 4 || 
+            filename[len - 4] != '.' || 
+            filename[len - 3] != 't' || 
+            filename[len - 2] != 'x' || 
+            filename[len - 1] != 't') {
+            print_string("Error: 'read' command only supports files ending with .txt\n", 58);
+            return;
+        }
+
+        int idx = find_file(filename);
+        if (idx == -1) {
+            print_string("Error: File not found!\n", 23);
+            return;
+        }
+
+        if (fs[idx].is_folder) {
+            print_string("Error: Cannot read a directory!\n", 32);
+            return;
+        }
+
+        print_string(fs[idx].content, str_len(fs[idx].content));
+        print_string("\n", 1);
+    }
+    else if (str_compare(expanded_buf, "off") == 0) {
+        const char *off_msg = "Now You Can Shutdown The Emulator\n";
+        print_string(off_msg, str_len(off_msg));
+        while (1) {
+            __asm__ __volatile__("pause");
+        }
     }
     else if (str_starts_with(expanded_buf, "print ")) {
         const char *text_to_print = expanded_buf + 6;
@@ -704,7 +754,7 @@ void execute_command(const char *cmd_line) {
                     res = num1 / num2;
                 }
             } else {
-                print_string("Error: Unknown operator. Use +, -, *, /, mod\n", 47);
+                print_string("Error: Unknown operator. Use +, +, *, /, mod\n", 47);
                 error = 1;
             }
         } else {
@@ -724,7 +774,7 @@ void execute_command(const char *cmd_line) {
             print_string("\n", 1);
         }
 }
-// init.c - DixiOS i386 User-Space Init Process (v0.2.9 - Part 4)
+// init.c - DixiOS i386 User-Space Init Process (v0.2.10 - Part 4)
 
     else if (str_starts_with(expanded_buf, "create ")) {
         const char *name = expanded_buf + 7;
@@ -932,13 +982,7 @@ void _start() {
         vars[i].used = 0;
     }
 
-    const char banner[] = 
-        "\n====================================\n"
-        " DixiOS i386 Init Started (v0.2.9)\n"
-        "====================================\n\n"
-        "Type 'help' to see available commands.\n\n";
-
-    print_string(banner, str_len(banner));
+    print_banner();
 
     char buf[128];
 
