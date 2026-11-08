@@ -94,3 +94,9 @@ November 2: Build Ninth Sub-Version From Second Version (0.2.9)
   - Add var -ls
   - Add history -rm
     
+November 7: Build Tenth Sub-Version From Second Version (0.2.10)
+
+ Features:
+
+  - Add read For Read TXT Files Content
+  - Add off For Shutdown
