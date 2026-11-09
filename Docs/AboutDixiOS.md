@@ -31,25 +31,20 @@ There are two files that start with the same name, but in different programming 
 
 Some of you may be wondering: Why?
 
-Firstly, If the HostOS is from the UNIX family, Use build.sh/build-lite.sh ( BASH )
+Firstly, If the HostOS is from the UNIX family, Use build.sh ( BASH )
 
-If The HostOS is Windows And The Your Windows Support PowerShell, Use build.ps1/build-lite.ps1 ( PowerShell )
+If The HostOS is Windows And The Your Windows Support PowerShell, Use build.ps1 ( PowerShell )
 
 And some of you are also wondering: why you don't use Makefile ( Cmake )
 
 The Answer is: Why build something in a language I haven't learned, when the two previous languages are sufficient?
 
-### The formats supported by the four files ( build.sh && build.ps1 && build-lite.sh && build-lite.ps1 )
-
-#### All Scripts Support This Formats
+### The formats supported by the files ( build.sh && build.ps1 )
 
 - IMG
 - ISO
 - TARXZ
-
-  #### Only build.sh && build.ps1 Support This Formats 
-
-- JAR ( BRIDGE )
+- BRIDGE/JAR
 - ALL
 
 ## End of general introduction to the DixiOS 
