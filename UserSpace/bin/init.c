@@ -1,4 +1,4 @@
-// init.c - DixiOS i386 User-Space Init Process (v0.2.10 - Part 1)
+// init.c - DixiOS i386 User-Space Init Process (v0.2.11 - Part 1)
 
 #define MAX_FILES 16
 #define MAX_FILENAME 32
@@ -150,7 +150,7 @@ int find_file(const char *name) {
 void execute_command(const char *cmd_line);
 void process_chained_commands(const char *line);
 void print_banner(void);
-// init.c - DixiOS i386 User-Space Init Process (v0.2.10 - Part 2)
+// init.c - DixiOS i386 User-Space Init Process (v0.2.11 - Part 2)
 
 void trim_string(char *str) {
     int start = 0;
@@ -353,12 +353,12 @@ void run_dxs_script(const char *content) {
 void print_banner(void) {
     const char banner[] = 
         "\n====================================\n"
-        " DixiOS i386 Init Started (v0.2.10)\n"
+        " DixiOS i386 Init Started (v0.2.11)\n"
         "====================================\n\n"
-        "Type 'help' to see available commands.\n\n";
+        "Type 'help 1' to 'help 5' to see available commands.\n\n";
     print_string(banner, str_len(banner));
 }
-// init.c - DixiOS i386 User-Space Init Process (v0.2.10 - Part 3)
+// init.c - DixiOS i386 User-Space Init Process (v0.2.11 - Part 3)
 
 void execute_command(const char *cmd_line) {
     char expanded_buf[128];
@@ -375,33 +375,11 @@ void execute_command(const char *cmd_line) {
     }
 
     if (str_compare(expanded_buf, "help") == 0) {
-        const char *help_msg = 
-            "DixiOS Commands (v0.2.10):\n"
-            "  help [cmd]            - Display help or specific command guide\n"
-            "  info                  - Show OS info\n"
-            "  read <file.txt>       - Display content of .txt files\n"
-            "  off                   - Shutdown emulator safely\n"
-            "  print <text>          - Print text (supports -var)\n"
-            "  create <name[/]>      - Create file or folder/\n"
-            "  edit <fileName>       - Text editor\n"
-            "  run <fileName>        - Execute file or .dxs script\n"
-            "  list                  - List files & folders\n"
-            "  goto <folderName/>    - Change directory\n"
-            "  remove <name[/]>      - Remove file or folder\n"
-            "  remove a              - Remove all files & folders\n"
-            "  alias <name> = <cmd>  - Create a custom shortcut\n"
-            "  alias -ls             - List all aliases\n"
-            "  alias -rm <name>|a    - Remove alias or all aliases\n"
-            "  var -ls               - List all variables\n"
-            "  var -rm <name>|a      - Remove variable or all variables\n"
-            "  color <HEX>           - Change terminal color (e.g. #0397cd)\n"
-            "  calc <n1> <op> <n2>   - Calculator (+, -, *, /, mod)\n"
-            "  set <var> = <val>     - Define a variable\n"
-            "  history               - Show last 5 commands\n"
-            "  history -rm           - Clear command history\n"
-            "  clear                 - Clear screen\n\n";
-
-        print_string(help_msg, str_len(help_msg));
+        const char *help_default = 
+            "DixiOS Help (v0.2.11):\n"
+            "  Use 'help <1-5>' to navigate command pages.\n"
+            "  Use 'help <cmd>' to see specific command details.\n\n";
+        print_string(help_default, str_len(help_default));
     }
     else if (str_starts_with(expanded_buf, "help ")) {
         char target_cmd[32];
@@ -413,8 +391,51 @@ void execute_command(const char *cmd_line) {
         target_cmd[tc_idx] = '\0';
         trim_string(target_cmd);
 
-        if (str_compare(target_cmd, "help") == 0) {
-            print_string("Help: Displays available commands or detailed info about a specific command.\nUsage: help [command]\n\n", 94);
+        if (str_compare(target_cmd, "1") == 0) {
+            const char *h1 = 
+                "DixiOS Commands [Page 1/5]:\n"
+                "  help [cmd|1-5]        - Display help, pages, or specific command guide\n"
+                "  info                  - Show OS info\n"
+                "  read <file.txt>       - Display content of .txt files\n"
+                "  off                   - Shutdown emulator safely\n"
+                "  print <text>          - Print text (supports -var)\n\n";
+            print_string(h1, str_len(h1));
+        } else if (str_compare(target_cmd, "2") == 0) {
+            const char *h2 = 
+                "DixiOS Commands [Page 2/5]:\n"
+                "  create <name[/]>      - Create file or folder/\n"
+                "  edit <fileName>       - Text editor\n"
+                "  run <fileName>        - Execute file or .dxs script\n"
+                "  list                  - List files & folders\n"
+                "  goto <folderName/>    - Change directory\n\n";
+            print_string(h2, str_len(h2));
+        } else if (str_compare(target_cmd, "3") == 0) {
+            const char *h3 = 
+                "DixiOS Commands [Page 3/5]:\n"
+                "  remove <name[/]>      - Remove file or folder\n"
+                "  remove a              - Remove all files & folders\n"
+                "  alias <name> = <cmd>  - Create a custom shortcut\n"
+                "  alias -ls             - List all aliases\n"
+                "  alias -rm <name>|a    - Remove alias or all aliases\n\n";
+            print_string(h3, str_len(h3));
+        } else if (str_compare(target_cmd, "4") == 0) {
+            const char *h4 = 
+                "DixiOS Commands [Page 4/5]:\n"
+                "  var -ls               - List all variables\n"
+                "  var -rm <name>|a    - Remove variable or all variables\n"
+                "  color <HEX>           - Change terminal color (e.g. #0397cd)\n"
+                "  calc <n1> <op> <n2>   - Calculator (+, -, *, /, mod)\n"
+                "  set <var> = <val>     - Define a variable\n\n";
+            print_string(h4, str_len(h4));
+        } else if (str_compare(target_cmd, "5") == 0) {
+            const char *h5 = 
+                "DixiOS Commands [Page 5/5]:\n"
+                "  history               - Show last 5 commands\n"
+                "  history -rm           - Clear command history\n"
+                "  clear                 - Clear screen\n\n";
+            print_string(h5, str_len(h5));
+        } else if (str_compare(target_cmd, "help") == 0) {
+            print_string("Help: Displays available commands or detailed info about a specific command.\nUsage: help [1-5|command]\n\n", 100);
         } else if (str_compare(target_cmd, "info") == 0) {
             print_string("Info: Shows system information, OS version, architecture, and author.\n\n", 74);
         } else if (str_compare(target_cmd, "read") == 0) {
@@ -456,7 +477,7 @@ void execute_command(const char *cmd_line) {
     else if (str_compare(expanded_buf, "info") == 0) {
         const char *info_msg = 
             "OS : DixiOS\n"
-            "Version : v0.2.10\n"
+            "Version : v0.2.11\n"
             "Architecture : x86_32\n"
             "Script Engine : DXS Multi-Command Supported (.dxs)\n"
             "Features : Aliases (-ls/-rm), Variables (-ls/-rm), History (-rm), Calc (mod), Read (.txt), Off\n"
@@ -754,7 +775,7 @@ void execute_command(const char *cmd_line) {
                     res = num1 / num2;
                 }
             } else {
-                print_string("Error: Unknown operator. Use +, +, *, /, mod\n", 47);
+                print_string("Error: Unknown operator. Use +, -, *, /, mod\n", 47);
                 error = 1;
             }
         } else {
@@ -774,7 +795,7 @@ void execute_command(const char *cmd_line) {
             print_string("\n", 1);
         }
 }
-// init.c - DixiOS i386 User-Space Init Process (v0.2.10 - Part 4)
+// init.c - DixiOS i386 User-Space Init Process (v0.2.11 - Part 4)
 
     else if (str_starts_with(expanded_buf, "create ")) {
         const char *name = expanded_buf + 7;
