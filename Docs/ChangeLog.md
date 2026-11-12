@@ -100,3 +100,4 @@ November 7: Build Tenth Sub-Version From Second Version (0.2.10)
 
   - Add read For Read TXT Files Content
   - Add off For Shutdown
+
