@@ -101,3 +101,9 @@ November 7: Build Tenth Sub-Version From Second Version (0.2.10)
   - Add read For Read TXT Files Content
   - Add off For Shutdown
 
+November 11: Build Eleventh Sub-Version From Second Version ( 0.2.11 )
+
+Codename: Last Sub-Version From Second Version 
+
+
+Features: Add help 1 - 5
