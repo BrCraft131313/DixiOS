@@ -8,7 +8,7 @@ First: Download The [VM](https://github.com/limboemu/limbo/releases/download/v6.
 
 Then: Download The [OS](https://github.com/BrCraft131313/DixiOS/releases)
 
-Then: Download The [Kernel](https://github.com/BrCraft131313/DixiOS/blob/Home/boot/kernel32.bin)
+Then: Download The [Kernel](https://github.com/BrCraft131313/DixiOS/blob/Home/boot/kernel.bin)
 
 Then: Create A New Machine
 
