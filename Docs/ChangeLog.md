@@ -105,9 +105,14 @@ November 11: Build Eleventh Sub-Version From Second Version ( 0.2.11 )
 
 Codename: Last Sub-Version From Second Version 
 
+add help 1 - help 5
 
 Features: Add help 1 - 5
 
 November 17: Build Twelveth & Thirteenth & Fourteenth & Fifteenth Sub-Versions From Second Version (0.2.12-15)
 Features: This Sub-Versions For Boot From USB/Real Laptop 
 (Please Dont Boot From USB or Real Laptop Now!, Wait to v0.3)
+
+Novmber 25: Build Third Version (v0.3)
+
+Features: This is A First Version Support Realboot/USB
