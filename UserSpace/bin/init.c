@@ -397,7 +397,7 @@ void execute_command(const char *cmd_line) {
                 "  help [cmd|1-5]        - Display help, pages, or specific command guide\n"
                 "  info                  - Show OS info\n"
                 "  read <file.txt>       - Display content of .txt files\n"
-                "  off                   - Shutdown emulator safely\n"
+                "  off                   - Shutting Down DixiOS \n"
                 "  print <text>          - Print text (supports -var)\n\n";
             print_string(h1, str_len(h1));
         } else if (str_compare(target_cmd, "2") == 0) {
@@ -441,7 +441,7 @@ void execute_command(const char *cmd_line) {
         } else if (str_compare(target_cmd, "read") == 0) {
             print_string("Read: Reads and displays the content of text files ending in .txt.\nUsage: read <filename.txt>\n\n", 94);
         } else if (str_compare(target_cmd, "off") == 0) {
-            print_string("Off: Displays shutdown message and pauses CPU.\nUsage: off\n\n", 57);
+            print_string("Off: Shutting Down DixiOS \nUsage: off\n\n", 57);
         } else if (str_compare(target_cmd, "print") == 0) {
             print_string("Print: Outputs the specified text to the terminal. Supports variables like -x.\nUsage: print <text>\n\n", 94);
         } else if (str_compare(target_cmd, "create") == 0) {
@@ -512,13 +512,33 @@ void execute_command(const char *cmd_line) {
         print_string(fs[idx].content, str_len(fs[idx].content));
         print_string("\n", 1);
     }
-    else if (str_compare(expanded_buf, "off") == 0) {
-        const char *off_msg = "Now You Can Shutdown The Emulator\n";
+        else if (str_compare(expanded_buf, "off") == 0) {
+        const char *off_msg = "Shutting down DixiOS...\n";
         print_string(off_msg, str_len(off_msg));
+
+        // 1. تفريغ البيانات وحفظها على القرص بأمان (sys_sync = 36)
+        __asm__ __volatile__ (
+            "int $0x80"
+            :
+            : "a"(36)
+        );
+
+        // 2. استدعاء إيقاف التشغيل الحقيقي (sys_reboot = 88)
+        __asm__ __volatile__ (
+            "int $0x80"
+            :
+            : "a"(88),
+              "b"(0xfee1dead),
+              "c"(0x28121969),
+              "d"(0x4321fedc)
+        );
+
+        // حلقة أمان احتياطية حتى تنقطع الكهرباء تمامًا
         while (1) {
             __asm__ __volatile__("pause");
         }
-    }
+        }
+            
     else if (str_starts_with(expanded_buf, "print ")) {
         const char *text_to_print = expanded_buf + 6;
         print_string(text_to_print, str_len(text_to_print));
