@@ -119,4 +119,5 @@ Features: This is A First Version Support Realboot/USB
 
 November 26: v0.3.1 With RealOff 
 
-November 27: Version 0.3.2 supports the reboot command via Linux SysCall 88 With the replacement of the ADX value from 0x4321fedc To 0x01234567 Regarding rebooting in Linux 32-bit
+November 27: Version 0.3.2 supports the reboot command via Linux SysCall 88 With the replacement of the EDX value from 0x4321fedc To 0x01234567 Regarding rebooting in Linux 32-bit && 0.3.3 support date
+And Comeback to Limbo X86 Emulator 
