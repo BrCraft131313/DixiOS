@@ -353,7 +353,7 @@ void run_dxs_script(const char *content) {
 void print_banner(void) {
     const char banner[] = 
         "\n====================================\n"
-        " DixiOS i386 Init Started (v0.2.11)\n"
+        " DixiOS i386 Init Started (v0.3.2)\n"
         "====================================\n\n"
         "Type 'help 1' to 'help 5' to see available commands.\n\n";
     print_string(banner, str_len(banner));
@@ -376,7 +376,7 @@ void execute_command(const char *cmd_line) {
 
     if (str_compare(expanded_buf, "help") == 0) {
         const char *help_default = 
-            "DixiOS Help (v0.2.11):\n"
+            "DixiOS Help (v0.3.2):\n"
             "  Use 'help <1-5>' to navigate command pages.\n"
             "  Use 'help <cmd>' to see specific command details.\n\n";
         print_string(help_default, str_len(help_default));
@@ -397,7 +397,7 @@ void execute_command(const char *cmd_line) {
                 "  help [cmd|1-5]        - Display help, pages, or specific command guide\n"
                 "  info                  - Show OS info\n"
                 "  read <file.txt>       - Display content of .txt files\n"
-                "  off                   - Shutting Down DixiOS \n"
+                "  off/reboot            - Shutting Down/Rebooting DixiOS \n"
                 "  print <text>          - Print text (supports -var)\n\n";
             print_string(h1, str_len(h1));
         } else if (str_compare(target_cmd, "2") == 0) {
@@ -442,6 +442,8 @@ void execute_command(const char *cmd_line) {
             print_string("Read: Reads and displays the content of text files ending in .txt.\nUsage: read <filename.txt>\n\n", 94);
         } else if (str_compare(target_cmd, "off") == 0) {
             print_string("Off: Shutting Down DixiOS \nUsage: off\n\n", 57);
+        } else if (str_compare(taregt_cmd, "reboot") == 0) {
+           print_string("Reboot: Rebooting DixiOS  \nUsage:off\n\n", 100)
         } else if (str_compare(target_cmd, "print") == 0) {
             print_string("Print: Outputs the specified text to the terminal. Supports variables like -x.\nUsage: print <text>\n\n", 94);
         } else if (str_compare(target_cmd, "create") == 0) {
@@ -477,10 +479,10 @@ void execute_command(const char *cmd_line) {
     else if (str_compare(expanded_buf, "info") == 0) {
         const char *info_msg = 
             "OS : DixiOS\n"
-            "Version : v0.2.11\n"
+            "Version : v0.3.2\n"
             "Architecture : x86_32\n"
             "Script Engine : DXS Multi-Command Supported (.dxs)\n"
-            "Features : Aliases (-ls/-rm), Variables (-ls/-rm), History (-rm), Calc (mod), Read (.txt), Off\n"
+            "Features : Reboot\n"
             "Author : BrCraft131313\n\n";
 
         print_string(info_msg, str_len(info_msg));
@@ -538,7 +540,33 @@ void execute_command(const char *cmd_line) {
             __asm__ __volatile__("pause");
         }
         }
-            
+
+        else if (str_compare(expanded_buf, "reboot") == 0) {
+        const char *reboot_msg = "Rebooting DixiOS...\n";
+        print_string(reboot_msg, str_len(reboot_msg));
+
+        // 1. تفريغ البيانات وحفظها على القرص بأمان (sys_sync = 36)
+        __asm__ __volatile__ (
+            "int $0x80"
+            :
+            : "a"(36)
+        );
+
+        // 2. واستدعاء إعادة التشغيل الحقيقية (sys_reboot = 88)
+        __asm__ __volatile__ (
+            "int $0x80"
+            :
+            : "a"(88),
+              "b"(0xfee1dead),
+              "c"(0x28121969),
+              "d"(0x01234567)
+        );
+
+        // حلقة أمان احتياطية حتى تنقطع الكهرباء تمامًا
+        while (1) {
+            __asm__ __volatile__("pause");
+        }
+            }
     else if (str_starts_with(expanded_buf, "print ")) {
         const char *text_to_print = expanded_buf + 6;
         print_string(text_to_print, str_len(text_to_print));
